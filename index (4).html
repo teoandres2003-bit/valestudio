@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Valestudio · Diseño · Contenido · Fotografía</title>
+  <meta name="description" content="Diseño gráfico, fotografía y contenido para marcas que quieren comunicar con intención y estilo."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{
+      --cream:#F5F3EF;--white:#FFFFFF;--black:#0E0E0E;--dark:#1A1A1A;
+      --marble:#C8C4BC;--muted:#7A7672;--border:#E0DDD8;
+    }
+    html{scroll-behavior:smooth;}
+    body{font-family:"DM Sans",sans-serif;background:var(--cream);color:var(--black);overflow-x:hidden;}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;background:rgba(245,243,239,0.95);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border);}
+    .nav-logo{display:flex;flex-direction:column;text-decoration:none;}
+    .nav-logo-name{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--black);}
+    .nav-logo-sub{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+    .nav-links{display:flex;align-items:center;gap:2.5rem;list-style:none;}
+    .nav-links a{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+    .nav-links a:hover{color:var(--black);}
+    .nav-cta{background:var(--black);color:var(--white);font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:10px 22px;border:none;cursor:pointer;text-decoration:none;transition:background 0.2s;}
+    .nav-cta:hover{opacity:0.85;}
+    .nav-hamburger{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;}
+    .nav-hamburger span{display:block;width:24px;height:1.5px;background:var(--black);}
+
+    /* HERO */
+    .hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:80px;}
+    .hero-left{display:flex;flex-direction:column;justify-content:center;padding:5rem 3rem 5rem 4rem;}
+    .hero-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:2rem;display:flex;align-items:center;gap:12px;}
+    .hero-eyebrow::before{content:"";display:block;width:30px;height:0.5px;background:var(--muted);}
+    .hero-title{font-family:"Cormorant Garamond",serif;font-size:clamp(52px,6vw,84px);font-weight:300;line-height:1.0;letter-spacing:-1px;color:var(--black);margin-bottom:2rem;}
+    .hero-title strong{font-weight:600;font-style:italic;}
+    .hero-desc{font-size:15px;line-height:1.8;color:var(--muted);max-width:360px;margin-bottom:3rem;font-weight:300;}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+    .btn-dark{background:var(--black);color:var(--white);font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:14px 28px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:opacity 0.2s;}
+    .btn-dark:hover{opacity:0.85;}
+    .btn-outline{background:transparent;color:var(--black);font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:14px 28px;border:1px solid var(--black);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;transition:all 0.2s;}
+    .btn-outline:hover{background:var(--black);color:var(--white);}
+    .hero-right{position:relative;overflow:hidden;background:var(--marble);}
+    .hero-img{width:100%;height:100%;object-fit:cover;}
+    .hero-img-ph{width:100%;height:100%;background:linear-gradient(135deg,#d4d0c8,#a8a49c);display:flex;align-items:center;justify-content:center;}
+    .hero-monogram{font-family:"Cormorant Garamond",serif;font-size:120px;font-weight:300;color:rgba(255,255,255,0.2);letter-spacing:-4px;}
+    .hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;}
+    .hero-scroll-line{width:0.5px;height:40px;background:var(--muted);animation:scrollLine 1.5s ease-in-out infinite;}
+    @keyframes scrollLine{0%{transform:scaleY(0);transform-origin:top;}50%{transform:scaleY(1);transform-origin:top;}51%{transform:scaleY(1);transform-origin:bottom;}100%{transform:scaleY(0);transform-origin:bottom;}}
+
+    /* SERVICES STRIP */
+    .services-strip{background:var(--black);padding:5rem 4rem;}
+    .services-strip-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;}
+    .service-item{padding:2.5rem 2rem;border-right:0.5px solid rgba(255,255,255,0.08);display:flex;flex-direction:column;align-items:flex-start;gap:1.25rem;}
+    .service-item:last-child{border-right:none;}
+    .service-icon{width:36px;height:36px;stroke:rgba(255,255,255,0.5);fill:none;stroke-width:1.2;}
+    .service-img{width:100%;aspect-ratio:3/2;object-fit:cover;opacity:0.6;margin-bottom:0.5rem;}
+    .service-name{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:400;color:var(--white);letter-spacing:1px;}
+    .service-desc{font-size:13px;line-height:1.7;color:rgba(255,255,255,0.4);font-weight:300;}
+    .service-link{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.5);text-decoration:none;margin-top:auto;display:flex;align-items:center;gap:8px;transition:color 0.2s;}
+    .service-link:hover{color:var(--white);}
+
+    /* ABOUT */
+    .about{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;}
+    .about-img{background:linear-gradient(160deg,#e8e4dc,#c8c4bc);position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;}
+    .about-img img{width:100%;height:100%;object-fit:cover;}
+    .about-img-ph{font-family:"Cormorant Garamond",serif;font-size:80px;font-weight:300;color:rgba(0,0,0,0.08);}
+    .about-stamp{position:absolute;bottom:2rem;right:2rem;width:90px;height:90px;border:1px solid rgba(0,0,0,0.15);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;}
+    .about-stamp-va{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:600;color:var(--black);}
+    .about-stamp-text{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);line-height:1.6;}
+    .about-right{display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;}
+    .section-eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:1.5rem;display:flex;align-items:center;gap:12px;}
+    .section-eyebrow::before{content:"";display:block;width:30px;height:0.5px;background:var(--muted);}
+    .section-title{font-family:"Cormorant Garamond",serif;font-size:clamp(34px,4vw,52px);font-weight:300;line-height:1.1;color:var(--black);margin-bottom:1.5rem;}
+    .section-title em{font-style:italic;font-weight:300;}
+    .section-body{font-size:15px;line-height:1.9;color:var(--muted);font-weight:300;margin-bottom:2.5rem;max-width:440px;}
+
+    /* PORTFOLIO */
+    .portfolio{padding:6rem 4rem;background:var(--white);}
+    .portfolio-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:3rem;}
+    .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .portfolio-item{overflow:hidden;position:relative;cursor:pointer;aspect-ratio:4/3;}
+    .portfolio-item:first-child{grid-column:span 2;aspect-ratio:16/9;}
+    .portfolio-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;}
+    .portfolio-item:hover img{transform:scale(1.04);}
+    .portfolio-item-ph{width:100%;height:100%;background:linear-gradient(135deg,#d4d0c8,#a8a49c);display:flex;align-items:center;justify-content:center;transition:transform 0.5s ease;}
+    .portfolio-item:hover .portfolio-item-ph{transform:scale(1.04);}
+    .portfolio-item-icon{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:300;color:rgba(255,255,255,0.3);}
+    .portfolio-item-label{position:absolute;bottom:0;left:0;right:0;padding:1.25rem;background:linear-gradient(transparent,rgba(0,0,0,0.55));color:var(--white);font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:300;opacity:0;transition:opacity 0.3s;}
+    .portfolio-item:hover .portfolio-item-label{opacity:1;}
+
+    /* PRINT */
+    .print{padding:6rem 4rem;background:var(--cream);}
+    .print-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+    .print-steps{display:flex;flex-direction:column;gap:2rem;margin-top:2.5rem;}
+    .print-step{display:flex;gap:1.25rem;align-items:flex-start;}
+    .print-step-num{font-family:"Cormorant Garamond",serif;font-size:36px;font-weight:300;color:var(--border);line-height:1;flex-shrink:0;width:40px;}
+    .print-step-title{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--black);margin-bottom:4px;}
+    .print-step-desc{font-size:13px;color:var(--muted);line-height:1.7;font-weight:300;}
+    .print-form{background:var(--white);padding:2.5rem;border:0.5px solid var(--border);}
+    .form-title{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:400;color:var(--black);margin-bottom:1.75rem;}
+    .upload-zone{border:1px dashed var(--border);padding:2rem;text-align:center;cursor:pointer;transition:border-color 0.2s,background 0.2s;margin-bottom:1.25rem;}
+    .upload-zone:hover{border-color:var(--black);background:var(--cream);}
+    .upload-icon{margin:0 auto 0.75rem;width:32px;height:32px;stroke:var(--marble);fill:none;stroke-width:1.2;}
+    .upload-text{font-size:13px;color:var(--muted);line-height:1.7;}
+    .upload-text strong{color:var(--black);}
+    .upload-formats{font-size:11px;color:var(--marble);margin-top:4px;letter-spacing:0.5px;}
+    .file-list{margin-bottom:1rem;display:flex;flex-direction:column;gap:6px;}
+    .file-chip{display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--cream);border:0.5px solid var(--border);font-size:12px;}
+    .file-chip-remove{margin-left:auto;cursor:pointer;color:var(--muted);font-size:16px;background:none;border:none;transition:color 0.2s;}
+    .file-chip-remove:hover{color:var(--black);}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+    .form-group{margin-bottom:12px;}
+    .form-label{display:block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .form-input,.form-select,.form-textarea{width:100%;background:var(--cream);border:0.5px solid var(--border);color:var(--black);font-family:"DM Sans",sans-serif;font-size:13px;padding:11px 14px;outline:none;transition:border-color 0.2s;appearance:none;}
+    .form-input::placeholder,.form-textarea::placeholder{color:var(--marble);}
+    .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--black);}
+    .form-select{background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%237A7672' stroke-width='1.2'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer;}
+    .color-options{display:flex;gap:8px;}
+    .color-btn{display:flex;align-items:center;gap:7px;padding:10px 18px;border:0.5px solid var(--border);background:var(--cream);cursor:pointer;font-family:"DM Sans",sans-serif;font-size:13px;color:var(--muted);transition:all 0.18s;flex:1;justify-content:center;}
+    .color-btn.active{border-color:var(--black);color:var(--black);background:var(--white);font-weight:500;}
+    .color-swatch{width:14px;height:14px;border:0.5px solid var(--border);flex-shrink:0;}
+    .form-textarea{resize:none;height:80px;}
+    .btn-submit{width:100%;background:var(--black);color:var(--white);font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:16px;border:none;cursor:pointer;margin-top:1rem;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;gap:10px;}
+    .btn-submit:hover{opacity:0.85;}
+    .btn-submit:disabled{opacity:0.4;cursor:not-allowed;}
+    .form-success{display:none;text-align:center;padding:2rem;}
+    .form-success-icon{font-size:40px;margin-bottom:1rem;}
+    .form-success-title{font-family:"Cormorant Garamond",serif;font-size:28px;font-weight:400;margin-bottom:0.75rem;}
+    .form-success-desc{font-size:14px;color:var(--muted);line-height:1.7;}
+
+    /* CONTACT CTA */
+    .contact-cta{background:var(--black);padding:6rem 4rem;display:grid;grid-template-columns:1fr auto;align-items:center;gap:3rem;}
+    .contact-cta-title{font-family:"Cormorant Garamond",serif;font-size:clamp(36px,4vw,64px);font-weight:300;color:var(--white);line-height:1.1;}
+    .contact-cta-title em{font-style:italic;}
+
+    /* FOOTER */
+    footer{background:var(--black);border-top:0.5px solid rgba(255,255,255,0.08);padding:3rem 4rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem;align-items:start;}
+    .footer-logo-name{font-family:"Cormorant Garamond",serif;font-size:18px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--white);margin-bottom:4px;}
+    .footer-logo-sub{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);}
+    .footer-copy{font-size:11px;color:rgba(255,255,255,0.25);margin-top:1.5rem;}
+    .footer-nav-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem;}
+    .footer-nav{display:flex;flex-direction:column;gap:0.5rem;list-style:none;}
+    .footer-nav a{font-size:13px;color:rgba(255,255,255,0.5);text-decoration:none;transition:color 0.2s;}
+    .footer-nav a:hover{color:var(--white);}
+    .footer-social{display:flex;gap:1rem;margin-top:0.5rem;flex-wrap:wrap;}
+    .footer-social a{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;padding-bottom:4px;border-bottom:0.5px solid rgba(255,255,255,0.1);}
+    .footer-social a:hover{color:var(--white);}
+
+    /* MOBILE MENU */
+    .mob-menu{display:none;position:fixed;inset:0;z-index:99;background:var(--cream);flex-direction:column;align-items:center;justify-content:center;gap:2rem;}
+    .mob-menu.open{display:flex;}
+    .mob-menu a{font-family:"Cormorant Garamond",serif;font-size:36px;font-weight:300;color:var(--black);text-decoration:none;letter-spacing:1px;}
+    .mob-close{position:absolute;top:1.5rem;right:2rem;background:none;border:none;font-size:28px;cursor:pointer;color:var(--black);}
+
+    /* ADMIN */
+    .admin-overlay{display:none;position:fixed;inset:0;z-index:200;background:rgba(14,14,14,0.97);overflow-y:auto;padding:2rem;}
+    .admin-overlay.open{display:block;}
+    .admin-box{max-width:800px;margin:0 auto;}
+    .admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(255,255,255,0.1);}
+    .admin-title{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:300;color:var(--white);letter-spacing:1px;}
+    .admin-close{background:none;border:none;color:rgba(255,255,255,0.4);font-size:28px;cursor:pointer;transition:color 0.2s;}
+    .admin-close:hover{color:var(--white);}
+    .admin-section{margin-bottom:2.5rem;}
+    .admin-section-title{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1.25rem;padding-bottom:0.75rem;border-bottom:0.5px solid rgba(255,255,255,0.06);}
+    .admin-upload-btn{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:0.5px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.7);font-family:"DM Sans",sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase;padding:10px 18px;cursor:pointer;transition:all 0.18s;}
+    .admin-upload-btn:hover{background:rgba(255,255,255,0.1);color:var(--white);}
+    .admin-img-preview{width:80px;height:60px;object-fit:cover;opacity:0.7;margin-top:8px;}
+    .admin-img-placeholder{width:80px;height:60px;background:rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;font-size:10px;color:rgba(255,255,255,0.2);margin-top:8px;}
+    .admin-img-row{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+    .admin-img-label{font-size:13px;color:rgba(255,255,255,0.5);flex:1;}
+    .admin-portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-bottom:1rem;}
+    .admin-portfolio-card{background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);padding:0.75rem;position:relative;}
+    .admin-portfolio-card img{width:100%;aspect-ratio:4/3;object-fit:cover;margin-bottom:0.5rem;}
+    .admin-portfolio-card-title{font-size:12px;color:rgba(255,255,255,0.6);}
+    .admin-portfolio-card-cat{font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px;}
+    .admin-portfolio-remove{position:absolute;top:6px;right:6px;background:rgba(14,14,14,0.8);border:none;color:rgba(255,255,255,0.5);cursor:pointer;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:color 0.18s;}
+    .admin-portfolio-remove:hover{color:var(--white);}
+    .admin-input{width:100%;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:"DM Sans",sans-serif;font-size:13px;padding:10px 13px;outline:none;margin-bottom:8px;}
+    .admin-input::placeholder{color:rgba(255,255,255,0.2);}
+    .admin-select{width:100%;background:rgba(255,255,255,0.05);border:0.5px solid rgba(255,255,255,0.1);color:var(--white);font-family:"DM Sans",sans-serif;font-size:13px;padding:10px 13px;outline:none;margin-bottom:8px;appearance:none;cursor:pointer;}
+    .admin-select option{background:#1A1A1A;}
+    .admin-btn{background:var(--white);color:var(--black);font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:11px 22px;border:none;cursor:pointer;transition:opacity 0.2s;}
+    .admin-btn:hover{opacity:0.85;}
+    .admin-btn-red{background:rgba(239,68,68,0.15);color:#f87171;border:0.5px solid rgba(239,68,68,0.2);}
+    .admin-btn-red:hover{background:rgba(239,68,68,0.25);opacity:1;}
+    .admin-msg{font-size:12px;margin-top:8px;height:16px;}
+    .admin-msg.ok{color:#4ade80;}
+    .admin-msg.err{color:#f87171;}
+    .uploading{opacity:0.5;pointer-events:none;}
+    .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.2);border-top-color:var(--white);border-radius:50%;animation:spin 0.7s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+
+    /* ANIMATIONS */
+    .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
+    .fade-up.visible{opacity:1;transform:translateY(0);}
+
+    /* RESPONSIVE */
+    @media(max-width:768px){
+      nav{padding:1.25rem 1.5rem;}
+      .nav-links,.nav-cta{display:none;}
+      .nav-hamburger{display:flex;}
+      .hero{grid-template-columns:1fr;min-height:auto;}
+      .hero-left{padding:3rem 1.5rem 2.5rem;}
+      .hero-right{height:55vw;}
+      .services-strip{padding:3rem 1.5rem;}
+      .services-strip-grid{grid-template-columns:1fr 1fr;}
+      .service-item{border-right:none;border-bottom:0.5px solid rgba(255,255,255,0.08);padding:1.75rem 1rem;}
+      .about{grid-template-columns:1fr;}
+      .about-img{height:60vw;}
+      .about-right{padding:3rem 1.5rem;}
+      .portfolio{padding:3.5rem 1.5rem;}
+      .portfolio-grid{grid-template-columns:1fr 1fr;}
+      .portfolio-item:first-child{grid-column:span 2;}
+      .portfolio-header{flex-direction:column;align-items:flex-start;gap:1rem;}
+      .print{padding:3.5rem 1.5rem;}
+      .print-grid{grid-template-columns:1fr;gap:2.5rem;}
+      .contact-cta{grid-template-columns:1fr;padding:3.5rem 1.5rem;}
+      footer{grid-template-columns:1fr;padding:3rem 1.5rem;gap:2rem;}
+      .form-row{grid-template-columns:1fr;}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#inicio" class="nav-logo">
+    <span class="nav-logo-name">Valestudio</span>
+    <span class="nav-logo-sub">Diseño · Contenido · Fotografía</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#sobre-mi">Sobre mí</a></li>
+    <li><a href="#imprimir">Imprimí</a></li>
+  </ul>
+  <div style="display:flex;gap:12px;align-items:center;">
+<a href="#contacto" class="nav-cta">Hablemos</a>
+  </div>
+  <button class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mob-menu">
+  <button class="mob-close" onclick="toggleMenu()">×</button>
+  <a href="#inicio" onclick="toggleMenu()">Inicio</a>
+  <a href="#servicios" onclick="toggleMenu()">Servicios</a>
+  <a href="#portfolio" onclick="toggleMenu()">Portfolio</a>
+  <a href="#sobre-mi" onclick="toggleMenu()">Sobre mí</a>
+  <a href="#imprimir" onclick="toggleMenu()">Imprimí</a>
+  <a href="#contacto" onclick="toggleMenu()">Hablemos</a>
+</div>
+
+<!-- HERO -->
+<section id="inicio" class="hero">
+  <div class="hero-left fade-up">
+    <div class="hero-eyebrow">Valestudio · Concepción del Uruguay</div>
+    <h1 class="hero-title">Diseñamos<br>ideas que<br><strong>conectan.</strong></h1>
+    <p class="hero-desc">Diseño gráfico, fotografía y contenido para marcas que quieren comunicar con intención y estilo.</p>
+    <div class="hero-btns">
+      <a href="#portfolio" class="btn-dark">Ver portfolio →</a>
+      <a href="#servicios" class="btn-outline">Conocer servicios</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-img-ph" id="hero-img-wrap"><span class="hero-monogram">VA</span></div>
+    <div class="hero-scroll" onclick="document.getElementById('servicios').scrollIntoView({behavior:'smooth'})">
+      <div class="hero-scroll-line"></div><span>Scroll</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicios" class="services-strip">
+  <div class="services-strip-grid">
+    <div class="service-item fade-up">
+      <div id="svc-img-diseno" style="display:none;width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:0.5rem;"><img style="width:100%;height:100%;object-fit:cover;" id="svc-img-diseno-img" src="" alt=""/></div>
+      <svg class="service-icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
+      <div class="service-name">Diseño Gráfico</div>
+      <div class="service-desc">Identidad visual, piezas para redes, editorial, papelería y más.</div>
+      <a href="#contacto" class="service-link">Ver más →</a>
+    </div>
+    <div class="service-item fade-up">
+      <div id="svc-img-fotografia" style="display:none;width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:0.5rem;"><img style="width:100%;height:100%;object-fit:cover;" id="svc-img-fotografia-img" src="" alt=""/></div>
+      <svg class="service-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      <div class="service-name">Fotografía</div>
+      <div class="service-desc">Fotografía de producto, espacios, eventos y retratos profesionales.</div>
+      <a href="#contacto" class="service-link">Ver más →</a>
+    </div>
+    <div class="service-item fade-up">
+      <div id="svc-img-community" style="display:none;width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:0.5rem;"><img style="width:100%;height:100%;object-fit:cover;" id="svc-img-community-img" src="" alt=""/></div>
+      <svg class="service-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <div class="service-name">Community Manager</div>
+      <div class="service-desc">Estrategia de contenido, gestión de redes y calendario editorial.</div>
+      <a href="#contacto" class="service-link">Ver más →</a>
+    </div>
+    <div class="service-item fade-up">
+      <div id="svc-img-papeleria" style="display:none;width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:0.5rem;"><img style="width:100%;height:100%;object-fit:cover;" id="svc-img-papeleria-img" src="" alt=""/></div>
+      <svg class="service-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      <div class="service-name">Papelería Creativa</div>
+      <div class="service-desc">Diseños únicos para momentos especiales y marcas con personalidad.</div>
+      <a href="#contacto" class="service-link">Ver más →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="sobre-mi" class="about">
+  <div class="about-img" id="about-img-wrap">
+    <span class="about-img-ph" id="about-img-ph">VA</span>
+    <div class="about-stamp">
+      <div class="about-stamp-va">VA</div>
+      <div class="about-stamp-text">Diseño con<br>intención<br>Est. 2022</div>
+    </div>
+  </div>
+  <div class="about-right fade-up">
+    <div class="section-eyebrow">Sobre mí</div>
+    <h2 class="section-title">Diseñadora gráfica<br>y creadora de<br><em>historias visuales.</em></h2>
+    <p class="section-body">Ayudo a marcas y emprendedores a comunicar su esencia a través del diseño, la fotografía y el contenido. Cada proyecto es único y lo abordo con compromiso, creatividad y atención al detalle.</p>
+    <a href="#contacto" class="btn-dark">Hablemos →</a>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio" class="portfolio">
+  <div class="portfolio-header fade-up">
+    <div>
+      <div class="section-eyebrow">Portfolio</div>
+      <h2 class="section-title" style="margin-bottom:0">Algunos proyectos<br><em>en los que trabajé.</em></h2>
+    </div>
+    <a href="#contacto" class="btn-outline">Hablemos →</a>
+  </div>
+  <div class="portfolio-grid" id="portfolio-grid">
+    <div class="portfolio-item"><div class="portfolio-item-ph"><span class="portfolio-item-icon">Portfolio</span></div><div class="portfolio-item-label">Cargando...</div></div>
+  </div>
+</section>
+
+<!-- PRINT -->
+<section id="imprimir" class="print">
+  <div class="print-grid">
+    <div class="fade-up">
+      <div class="section-eyebrow">Imprimí tus ideas</div>
+      <h2 class="section-title">Subí tu archivo,<br><em>nosotros lo imprimimos.</em></h2>
+      <p class="section-body">Elegí las opciones que necesitás y recibí impresiones de calidad. Aceptamos PDF, JPG, PNG y TIFF.</p>
+      <div class="print-steps">
+        <div class="print-step"><div class="print-step-num">1</div><div><div class="print-step-title">Subí tu archivo</div><div class="print-step-desc">PDF, JPG, PNG o cualquier formato de imagen de calidad.</div></div></div>
+        <div class="print-step"><div class="print-step-num">2</div><div><div class="print-step-title">Elegí cantidad y opciones</div><div class="print-step-desc">Indicá cuántas hojas necesitás, el tipo y el color.</div></div></div>
+        <div class="print-step"><div class="print-step-num">3</div><div><div class="print-step-title">Nosotros nos encargamos</div><div class="print-step-desc">Recibís tu presupuesto y coordinamos la entrega.</div></div></div>
+      </div>
+    </div>
+    <div id="print-form-wrap" class="print-form fade-up">
+      <div class="form-title">Solicitar impresión</div>
+      <div class="upload-zone" id="upload-zone" onclick="document.getElementById('file-input').click()">
+        <svg class="upload-icon" viewBox="0 0 24 24"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+        <div class="upload-text"><strong>Arrastrá o hacé click para subir</strong></div>
+        <div class="upload-formats">PDF · JPG · PNG · TIFF</div>
+        <input type="file" id="file-input" multiple accept=".pdf,.jpg,.jpeg,.png,.tiff,.tif" style="display:none" onchange="handleFiles(event)"/>
+      </div>
+      <div class="file-list" id="file-list"></div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Cantidad de hojas</label>
+          <input class="form-input" id="f-hojas" type="number" min="1" placeholder="Ej: 10"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tipo de hoja</label>
+          <select class="form-select" id="f-tipo">
+            <option value="">Seleccioná</option>
+            <option>A4</option><option>A3</option><option>Oficio</option><option>Carta</option><option>Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Color</label>
+        <div class="color-options">
+          <button class="color-btn" data-color="A color" onclick="selectColor(this)">
+            <div class="color-swatch" style="background:linear-gradient(135deg,#e74c3c,#3498db,#2ecc71)"></div>A color
+          </button>
+          <button class="color-btn" data-color="Blanco y negro" onclick="selectColor(this)">
+            <div class="color-swatch" style="background:linear-gradient(135deg,#000 50%,#fff 50%);border:0.5px solid #ddd;"></div>Blanco y negro
+          </button>
+        </div>
+      </div>
+      <div class="form-row" style="margin-top:12px">
+        <div class="form-group"><label class="form-label">Nombre</label><input class="form-input" id="f-nombre" type="text" placeholder="Tu nombre"/></div>
+        <div class="form-group"><label class="form-label">Email o WhatsApp</label><input class="form-input" id="f-contacto" type="text" placeholder="Para coordinar"/></div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Observaciones (opcional)</label>
+        <textarea class="form-textarea" id="f-obs" placeholder="Algún detalle adicional..."></textarea>
+      </div>
+      <button class="btn-submit" id="btn-submit" onclick="submitForm()">Solicitar presupuesto</button>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT CTA -->
+<section id="contacto" class="contact-cta">
+  <div class="fade-up">
+    <h2 class="contact-cta-title">¿Listo para trabajar<br><em>juntos?</em></h2>
+  </div>
+  <a href="mailto:valestudio757@gmail.com" class="btn-dark" style="background:var(--white);color:var(--black);">Hablemos →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo-name">Valestudio</div>
+    <div class="footer-logo-sub">Diseño · Contenido · Fotografía</div>
+    <div class="footer-copy">© 2025 Valestudio. Todos los derechos reservados.</div>
+  </div>
+  <div>
+    <div class="footer-nav-title">Navegación</div>
+    <ul class="footer-nav">
+      <li><a href="#inicio">Inicio</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#portfolio">Portfolio</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#imprimir">Imprimí</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </div>
+  <div>
+    <div class="footer-nav-title">Seguime</div>
+    <div class="footer-social">
+      <a href="https://www.instagram.com/vadis560" target="_blank">Instagram</a>
+      <a href="#" target="_blank">Behance</a>
+      <a href="mailto:valestudio757@gmail.com">Email</a>
+    </div>
+  </div>
+</footer>
+
+<!-- ADMIN PANEL -->
+<div class="admin-overlay" id="admin-overlay">
+  <div class="admin-box">
+    <div class="admin-header">
+      <div class="admin-title">Panel · Valestudio</div>
+      <button class="admin-close" onclick="closeAdmin()">×</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="admin-login">
+      <div class="admin-section">
+        <div class="admin-section-title">Acceso</div>
+        <input class="admin-input" id="admin-pass" type="password" placeholder="Contraseña" onkeydown="if(event.key==='Enter')adminLogin()"/>
+        <div style="margin-top:8px"><button class="admin-btn" onclick="adminLogin()">Entrar</button></div>
+        <div class="admin-msg err" id="admin-login-err"></div>
+      </div>
+    </div>
+
+    <!-- PANEL -->
+    <div id="admin-panel" style="display:none">
+
+      <!-- FOTO PERFIL -->
+      <div class="admin-section">
+        <div class="admin-section-title">Foto de perfil (Sobre mí)</div>
+        <div class="admin-img-row">
+          <div id="prev-perfil" class="admin-img-placeholder">Sin imagen</div>
+          <div>
+            <button class="admin-upload-btn" onclick="document.getElementById('up-perfil').click()">Subir foto</button>
+            <input type="file" id="up-perfil" accept="image/*" style="display:none" onchange="uploadConfig(event,'foto_perfil','prev-perfil','about')"/>
+            <div class="admin-msg" id="msg-perfil"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMÁGENES SERVICIOS -->
+      <div class="admin-section">
+        <div class="admin-section-title">Imágenes de servicios</div>
+        <div class="admin-img-row">
+          <div id="prev-diseno" class="admin-img-placeholder">Diseño</div>
+          <div>
+            <div class="admin-img-label">Diseño Gráfico</div>
+            <button class="admin-upload-btn" onclick="document.getElementById('up-diseno').click()">Subir imagen</button>
+            <input type="file" id="up-diseno" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_diseno','prev-diseno','svc-diseno')"/>
+            <div class="admin-msg" id="msg-diseno"></div>
+          </div>
+        </div>
+        <div class="admin-img-row">
+          <div id="prev-foto" class="admin-img-placeholder">Foto</div>
+          <div>
+            <div class="admin-img-label">Fotografía</div>
+            <button class="admin-upload-btn" onclick="document.getElementById('up-foto').click()">Subir imagen</button>
+            <input type="file" id="up-foto" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_fotografia','prev-foto','svc-fotografia')"/>
+            <div class="admin-msg" id="msg-foto"></div>
+          </div>
+        </div>
+        <div class="admin-img-row">
+          <div id="prev-community" class="admin-img-placeholder">Community</div>
+          <div>
+            <div class="admin-img-label">Community Manager</div>
+            <button class="admin-upload-btn" onclick="document.getElementById('up-community').click()">Subir imagen</button>
+            <input type="file" id="up-community" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_community','prev-community','svc-community')"/>
+            <div class="admin-msg" id="msg-community"></div>
+          </div>
+        </div>
+        <div class="admin-img-row">
+          <div id="prev-papeleria" class="admin-img-placeholder">Papelería</div>
+          <div>
+            <div class="admin-img-label">Papelería Creativa</div>
+            <button class="admin-upload-btn" onclick="document.getElementById('up-papeleria').click()">Subir imagen</button>
+            <input type="file" id="up-papeleria" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_papeleria','prev-papeleria','svc-papeleria')"/>
+            <div class="admin-msg" id="msg-papeleria"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PORTFOLIO -->
+      <div class="admin-section">
+        <div class="admin-section-title">Portfolio</div>
+        <div class="admin-portfolio-grid" id="admin-portfolio-grid"></div>
+        <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);padding:1.25rem;margin-top:0.5rem;">
+          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem;">Agregar proyecto</div>
+          <input class="admin-input" id="new-pl-titulo" placeholder="Título del proyecto"/>
+          <select class="admin-select" id="new-pl-cat">
+            <option value="">Categoría</option>
+            <option>Branding</option><option>Fotografía</option><option>Editorial</option>
+            <option>Redes</option><option>Papelería</option><option>Otro</option>
+          </select>
+          <button class="admin-upload-btn" style="margin-bottom:8px" onclick="document.getElementById('up-portfolio').click()">Seleccionar imagen</button>
+          <input type="file" id="up-portfolio" accept="image/*" style="display:none" onchange="previewNewPortfolio(event)"/>
+          <div id="new-pl-preview" style="margin-bottom:8px;"></div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <button class="admin-btn" onclick="addPortfolioItem()">Agregar al portfolio</button>
+          </div>
+          <div class="admin-msg" id="msg-portfolio"></div>
+        </div>
+      </div>
+
+      <button class="admin-btn" onclick="closeAdmin()" style="margin-top:1rem;">Cerrar panel</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient("https://oftlbcukbqvdcsfjwzbv.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mdGxiY3VrYnF2ZGNzZmp3emJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNjE1ODUsImV4cCI6MjEwMjgzNzU4NX0.AjgAuzftTHERx0_v-JWEh5oX_u0kI8LX4s59RLdfp2s");
+const CLOUD = "b2wkfr8r";
+const PRESET = "valestudio_uploads";
+const ADMIN_PASS = "valestudio2025";
+
+// ── MOBILE MENU ──
+function toggleMenu(){ document.getElementById('mob-menu').classList.toggle('open'); }
+
+// ── SCROLL ANIMATIONS ──
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold:0.1});
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ── DRAG & DROP ──
+const zone = document.getElementById('upload-zone');
+zone.addEventListener('dragover', e => { e.preventDefault(); zone.style.borderColor='#0E0E0E'; });
+zone.addEventListener('dragleave', () => { zone.style.borderColor=''; });
+zone.addEventListener('drop', e => { e.preventDefault(); zone.style.borderColor=''; handleFiles({target:{files:e.dataTransfer.files}}); });
+
+// ── PRINT FORM ──
+let selectedFiles = [], selectedColor = '';
+
+function handleFiles(e){
+  Array.from(e.target.files).forEach(f => {
+    if(!selectedFiles.find(sf => sf.name===f.name)) selectedFiles.push(f);
+  });
+  renderFiles();
+}
+
+function renderFiles(){
+  const list = document.getElementById('file-list');
+  list.innerHTML = '';
+  selectedFiles.forEach((f,i) => {
+    const chip = document.createElement('div');
+    chip.className = 'file-chip';
+    chip.innerHTML = `<span>📄</span><span style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${f.name}</span><span style="color:#7A7672;font-size:11px">${(f.size/1024).toFixed(0)}KB</span><button class="file-chip-remove" onclick="removeFile(${i})">×</button>`;
+    list.appendChild(chip);
+  });
+}
+
+function removeFile(i){ selectedFiles.splice(i,1); renderFiles(); }
+
+function selectColor(btn){
+  document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selectedColor = btn.dataset.color;
+}
+
+async function submitForm(){
+  const hojas = document.getElementById('f-hojas').value;
+  const tipo = document.getElementById('f-tipo').value;
+  const nombre = document.getElementById('f-nombre').value.trim();
+  const contacto = document.getElementById('f-contacto').value.trim();
+  const obs = document.getElementById('f-obs').value.trim();
+  if(!selectedFiles.length){ alert('Por favor subí al menos un archivo.'); return; }
+  if(!hojas){ alert('Indicá la cantidad de hojas.'); return; }
+  if(!tipo){ alert('Seleccioná el tipo de hoja.'); return; }
+  if(!selectedColor){ alert('Elegí color o blanco y negro.'); return; }
+  if(!nombre||!contacto){ alert('Completá tu nombre y contacto.'); return; }
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true; btn.textContent = 'Subiendo archivos...';
+  try {
+    // Upload each file to Cloudinary and collect links
+    const fileLinks = [];
+    for(const file of selectedFiles){
+      const fd = new FormData();
+      fd.append('file', file);
+      const r = await fetch('/api/upload', {method:'POST', body:fd});
+      const d = await r.json();
+      if(d.url){
+        fileLinks.push(d.url + ' (' + d.name + ')');
+      }
+    }
+    btn.textContent = 'Enviando...';
+    const archivosTexto = fileLinks.length
+      ? fileLinks.map((url,i) => selectedFiles[i].name + ': ' + url).join('\n')
+      : selectedFiles.map(f => f.name).join(', ');
+    await emailjs.send('service_p612nrh', 'template_u2432f1', {
+      nombre, contacto,
+      archivos: archivosTexto,
+      hojas, tipo,
+      color: selectedColor,
+      observaciones: obs || 'Ninguna'
+    });
+    document.getElementById('print-form-wrap').innerHTML = '<div style="text-align:center;padding:3rem 2rem"><div style="font-size:48px;margin-bottom:1rem">✓</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:400;margin-bottom:0.75rem;">¡Solicitud enviada!</div><div style="font-size:14px;color:#7A7672;line-height:1.7;">Recibimos tu pedido y te contactamos pronto para coordinar los detalles.</div></div>';
+  } catch(err) {
+    btn.disabled = false; btn.textContent = 'Solicitar presupuesto';
+    alert('Error al enviar. Escribinos directamente a valestudio757@gmail.com');
+  }
+}
+
+// ── LOAD SITE DATA ──
+async function loadSiteData(){
+  // Load config
+  const {data:cfg} = await sb.from('config').select('*');
+  if(cfg){
+    cfg.forEach(row => {
+      if(!row.valor) return;
+      if(row.clave === 'foto_perfil'){
+        const wrap = document.getElementById('about-img-wrap');
+        document.getElementById('about-img-ph').style.display='none';
+        const img = document.createElement('img');
+        img.src = row.valor; img.style.cssText='width:100%;height:100%;object-fit:cover;';
+        wrap.insertBefore(img, wrap.firstChild);
+      }
+      if(row.clave === 'img_diseno') showSvcImg('diseno', row.valor);
+      if(row.clave === 'img_fotografia') showSvcImg('fotografia', row.valor);
+      if(row.clave === 'img_community') showSvcImg('community', row.valor);
+      if(row.clave === 'img_papeleria') showSvcImg('papeleria', row.valor);
+    });
+  }
+  // Load portfolio
+  const {data:pf} = await sb.from('portfolio').select('*').order('orden');
+  renderPortfolio(pf||[]);
+}
+
+function showSvcImg(key, url){
+  const wrap = document.getElementById(`svc-img-${key}`);
+  const img = document.getElementById(`svc-img-${key}-img`);
+  if(wrap&&img){ img.src=url; wrap.style.display='block'; }
+}
+
+function renderPortfolio(items){
+  const grid = document.getElementById('portfolio-grid');
+  if(!items.length){
+    grid.innerHTML = '<div class="portfolio-item"><div class="portfolio-item-ph"><span class="portfolio-item-icon">Próximamente</span></div></div>';
+    return;
+  }
+  grid.innerHTML = '';
+  items.forEach((item,i) => {
+    const el = document.createElement('div');
+    el.className = 'portfolio-item' + (i===0?' fade-up':'');
+    if(i===0) el.style.gridColumn='span 2';
+    el.innerHTML = `<img src="${item.imagen_url}" alt="${item.titulo}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;"/><div class="portfolio-item-label">${item.titulo} · ${item.categoria}</div>`;
+    el.querySelector('img').onmouseover = e => e.target.style.transform='scale(1.04)';
+    el.querySelector('img').onmouseout = e => e.target.style.transform='';
+    grid.appendChild(el);
+  });
+}
+
+// ── ADMIN ──
+function openAdmin(){
+  document.getElementById('admin-overlay').classList.add('open');
+  document.getElementById('admin-pass').focus();
+}
+
+function closeAdmin(){
+  document.getElementById('admin-overlay').classList.remove('open');
+}
+
+function adminLogin(){
+  const pass = document.getElementById('admin-pass').value;
+  if(pass === ADMIN_PASS){
+    document.getElementById('admin-login').style.display='none';
+    document.getElementById('admin-panel').style.display='block';
+    loadAdminData();
+  } else {
+    document.getElementById('admin-login-err').textContent='Contraseña incorrecta.';
+  }
+}
+
+async function loadAdminData(){
+  const {data:cfg} = await sb.from('config').select('*');
+  if(cfg) cfg.forEach(row => {
+    if(!row.valor) return;
+    const previewMap = {
+      'foto_perfil':'prev-perfil',
+      'img_diseno':'prev-diseno',
+      'img_fotografia':'prev-foto',
+      'img_community':'prev-community',
+      'img_papeleria':'prev-papeleria'
+    };
+    const prevId = previewMap[row.clave];
+    if(prevId) setAdminPreview(prevId, row.valor);
+  });
+  const {data:pf} = await sb.from('portfolio').select('*').order('orden');
+  renderAdminPortfolio(pf||[]);
+}
+
+function setAdminPreview(id, url){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.outerHTML = `<img id="${id}" class="admin-img-preview" src="${url}" alt=""/>`;
+}
+
+async function uploadToCloudinary(file){
+  const fd = new FormData();
+  fd.append('file', file);
+  fd.append('upload_preset', PRESET);
+  const r = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD}/image/upload`, {method:'POST',body:fd});
+  const d = await r.json();
+  if(d.secure_url) return d.secure_url;
+  throw new Error(d.error?.message||'Error al subir');
+}
+
+async function uploadConfig(e, clave, prevId, svcKey){
+  const file = e.target.files[0]; if(!file) return;
+  const msgId = 'msg-' + prevId.replace('prev-','');
+  const msg = document.getElementById(msgId);
+  if(msg) { msg.className='admin-msg'; msg.textContent='Subiendo...'; }
+  try{
+    const url = await uploadToCloudinary(file);
+    await sb.from('config').update({valor:url, updated_at:new Date().toISOString()}).eq('clave',clave);
+    setAdminPreview(prevId, url);
+    if(msg) { msg.className='admin-msg ok'; msg.textContent='✓ Guardado'; }
+    // Update live
+    if(clave==='foto_perfil'){
+      const wrap=document.getElementById('about-img-wrap');
+      const ph=document.getElementById('about-img-ph');
+      if(ph) ph.style.display='none';
+      let img=wrap.querySelector('img:not(.about-stamp img)');
+      if(!img){ img=document.createElement('img'); img.style.cssText='width:100%;height:100%;object-fit:cover;'; wrap.insertBefore(img,wrap.firstChild); }
+      img.src=url;
+    } else {
+      showSvcImg(svcKey, url);
+    }
+  } catch(err){
+    if(msg) { msg.className='admin-msg err'; msg.textContent='Error: '+err.message; }
+  }
+}
+
+let newPortfolioFile = null;
+function previewNewPortfolio(e){
+  newPortfolioFile = e.target.files[0];
+  if(!newPortfolioFile) return;
+  const prev = document.getElementById('new-pl-preview');
+  const reader = new FileReader();
+  reader.onload = ev => { prev.innerHTML=`<img src="${ev.target.result}" style="width:120px;height:80px;object-fit:cover;opacity:0.7;"/>`; };
+  reader.readAsDataURL(newPortfolioFile);
+}
+
+async function addPortfolioItem(){
+  const titulo = document.getElementById('new-pl-titulo').value.trim();
+  const cat = document.getElementById('new-pl-cat').value;
+  const msg = document.getElementById('msg-portfolio');
+  if(!titulo||!cat||!newPortfolioFile){ msg.className='admin-msg err'; msg.textContent='Completá título, categoría e imagen.'; return; }
+  msg.className='admin-msg'; msg.textContent='Subiendo...';
+  try{
+    const url = await uploadToCloudinary(newPortfolioFile);
+    const {data:existing} = await sb.from('portfolio').select('orden').order('orden',{ascending:false}).limit(1);
+    const orden = existing&&existing.length ? existing[0].orden+1 : 0;
+    await sb.from('portfolio').insert({titulo, categoria:cat, imagen_url:url, orden});
+    msg.className='admin-msg ok'; msg.textContent='✓ Proyecto agregado';
+    document.getElementById('new-pl-titulo').value='';
+    document.getElementById('new-pl-cat').value='';
+    document.getElementById('new-pl-preview').innerHTML='';
+    newPortfolioFile=null;
+    const {data:pf} = await sb.from('portfolio').select('*').order('orden');
+    renderAdminPortfolio(pf||[]);
+    renderPortfolio(pf||[]);
+  } catch(err){
+    msg.className='admin-msg err'; msg.textContent='Error: '+err.message;
+  }
+}
+
+function renderAdminPortfolio(items){
+  const grid = document.getElementById('admin-portfolio-grid');
+  grid.innerHTML='';
+  if(!items.length){ grid.innerHTML='<div style="font-size:12px;color:rgba(255,255,255,0.2);">Sin proyectos aún.</div>'; return; }
+  items.forEach(item => {
+    const card=document.createElement('div');
+    card.className='admin-portfolio-card';
+    card.innerHTML=`<img src="${item.imagen_url}" alt=""/><div class="admin-portfolio-card-title">${item.titulo}</div><div class="admin-portfolio-card-cat">${item.categoria}</div><button class="admin-portfolio-remove" onclick="removePortfolioItem('${item.id}')">×</button>`;
+    grid.appendChild(card);
+  });
+}
+
+async function removePortfolioItem(id){
+  if(!confirm('¿Eliminar este proyecto del portfolio?')) return;
+  await sb.from('portfolio').delete().eq('id',id);
+  const {data:pf} = await sb.from('portfolio').select('*').order('orden');
+  renderAdminPortfolio(pf||[]);
+  renderPortfolio(pf||[]);
+}
+
+// ── INIT ──
+emailjs.init('re3ob2fAcLzXxa_A8');
+loadSiteData();
+
+// ── SECRET ADMIN ACCESS ──
+// Method 1: Key sequence - type "vsadmin" anywhere on the page
+let keySeq = '';
+document.addEventListener('keydown', e => {
+  keySeq += e.key.toLowerCase();
+  if(keySeq.length > 7) keySeq = keySeq.slice(-7);
+  if(keySeq === 'vsadmin') { keySeq = ''; openAdmin(); }
+});
+
+// Method 2: Triple click on footer logo
+let clickCount = 0, clickTimer;
+document.querySelector('.footer-logo-name').addEventListener('click', () => {
+  clickCount++;
+  clearTimeout(clickTimer);
+  clickTimer = setTimeout(() => clickCount = 0, 600);
+  if(clickCount >= 3) { clickCount = 0; openAdmin(); }
+});
+</script>
+</body>
+</html>
