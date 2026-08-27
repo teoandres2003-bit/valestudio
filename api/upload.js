@@ -50,8 +50,8 @@ module.exports = async (req, res) => {
 
     // Sign the upload
     const timestamp = Math.round(Date.now() / 1000);
-    const isPDF = fileName.toLowerCase().endsWith('.pdf') || fileType === 'application/pdf';
-    const resourceType = isPDF ? 'raw' : 'auto';
+    // Use 'auto' for everything - Cloudinary handles PDFs and images
+    const resourceType = 'auto';
     
     // access_mode=public must be included in signature (alphabetical order)
     const paramsToSign = `access_mode=public&timestamp=${timestamp}`;
