@@ -53,7 +53,8 @@ module.exports = async (req, res) => {
     const isPDF = fileName.toLowerCase().endsWith('.pdf') || fileType === 'application/pdf';
     const resourceType = isPDF ? 'raw' : 'auto';
     
-    const paramsToSign = `timestamp=${timestamp}`;
+    // access_mode=public must be included in signature (alphabetical order)
+    const paramsToSign = `access_mode=public&timestamp=${timestamp}`;
     const signature = crypto.createHash('sha1')
       .update(paramsToSign + API_SECRET)
       .digest('hex');
@@ -61,6 +62,7 @@ module.exports = async (req, res) => {
     // Build multipart for Cloudinary
     const formData = buildMultipart({
       file: { buffer: fileBuffer, filename: fileName, contentType: fileType },
+      access_mode: 'public',
       api_key: API_KEY,
       timestamp: String(timestamp),
       signature: signature,
