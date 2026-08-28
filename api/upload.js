@@ -47,7 +47,8 @@ module.exports = async (req, res) => {
 
     if (isPDF) {
       // Upload PDFs to Supabase Storage
-      const filePath = `prints/${Date.now()}_${fileName}`;
+      const safeFileName = encodeURIComponent(fileName.replace(/\s+/g, '_'));
+      const filePath = `prints/${Date.now()}_${safeFileName}`;
       const uploadRes = await new Promise((resolve, reject) => {
         const options = {
           hostname: 'oftlbcukbqvdcsfjwzbv.supabase.co',
