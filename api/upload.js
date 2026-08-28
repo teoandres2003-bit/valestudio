@@ -6,7 +6,7 @@ const API_KEY = '422946848896529';
 const API_SECRET = 'GbxJF-HH8YZxUvOGPBW8Z_s9p_c';
 
 const SURL = 'https://oftlbcukbqvdcsfjwzbv.supabase.co';
-const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mdGxiY3VrYnF2ZGNzZmp3emJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNjE1ODUsImV4cCI6MjEwMjgzNzU4NX0.AjgAuzftTHERx0_v-JWEh5oX_v0kI8LX4s59RLdfp2s';
+const SKEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9mdGxiY3VrYnF2ZGNzZmp3emJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODcyNjE1ODUsImV4cCI6MjEwMjgzNzU4NX0.AjgAuzftTHERx0_v-JWEh5oX_u0kI8LX4s59RLdfp2s';
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -82,7 +82,8 @@ module.exports = async (req, res) => {
       await uploadToCloudinary(fileBuffer, fileName, fileType, 'auto', res);
     }
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Upload error:', err);
+    res.status(500).json({ error: err.message, stack: err.stack });
   }
 };
 
