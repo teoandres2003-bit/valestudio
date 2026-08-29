@@ -364,7 +364,7 @@
       <div class="file-list" id="file-list"></div>
       <div class="form-row">
         <div class="form-group">
-          <label class="form-label">Cantidad de hojas</label>
+          <label class="form-label">Cantidad de copias</label>
           <input class="form-input" id="f-hojas" type="number" min="1" placeholder="Ej: 10"/>
         </div>
         <div class="form-group">
@@ -429,8 +429,8 @@
     <div class="footer-nav-title">Seguime</div>
     <div class="footer-social">
       <a href="https://www.instagram.com/vadis560" target="_blank">Instagram</a>
-      <a href="#" target="_blank">Behance</a>
-      <a href="mailto:valestudio757@gmail.com">Email</a>
+      
+      <a href="#" onclick="copyEmail(event)">Email</a>
     </div>
   </div>
 </footer>
@@ -596,7 +596,7 @@ async function submitForm(){
   const contacto = document.getElementById('f-contacto').value.trim();
   const obs = document.getElementById('f-obs').value.trim();
   if(!selectedFiles.length){ alert('Por favor subí al menos un archivo.'); return; }
-  if(!hojas){ alert('Indicá la cantidad de hojas.'); return; }
+  if(!hojas){ alert('Indicá la cantidad de copias.'); return; }
   if(!tipo){ alert('Seleccioná el tipo de hoja.'); return; }
   if(!selectedColor){ alert('Elegí color o blanco y negro.'); return; }
   if(!nombre||!contacto){ alert('Completá tu nombre y contacto.'); return; }
@@ -621,11 +621,11 @@ async function submitForm(){
     await emailjs.send('service_p612nrh', 'template_u2432f1', {
       nombre, contacto,
       archivos: archivosTexto,
-      hojas, tipo,
+      copias, tipo,
       color: selectedColor,
       observaciones: obs || 'Ninguna'
     });
-    document.getElementById('print-form-wrap').innerHTML = '<div style="text-align:center;padding:3rem 2rem"><div style="font-size:48px;margin-bottom:1rem">✓</div><div style="font-family:\'Cormorant Garamond\',serif;font-size:28px;font-weight:400;margin-bottom:0.75rem;">¡Solicitud enviada!</div><div style="font-size:14px;color:#7A7672;line-height:1.7;">Recibimos tu pedido y te contactamos pronto para coordinar los detalles.</div></div>';
+    document.getElementById('print-form-wrap').innerHTML = '<div style="text-align:center;padding:3rem 2rem"><div style="font-size:48px;margin-bottom:1rem">✓</div><div style="font-family:Cormorant Garamond,serif;font-size:28px;font-weight:400;margin-bottom:0.75rem;">¡Solicitud enviada!</div><div style="font-size:14px;color:#7A7672;line-height:1.7;">Recibimos tu pedido y te contactamos pronto para coordinar los detalles.</div></div>';
   } catch(err) {
     btn.disabled = false; btn.textContent = 'Solicitar presupuesto';
     alert('Error al enviar. Escribinos directamente a valestudio757@gmail.com');
@@ -661,24 +661,6 @@ function showSvcImg(key, url){
   const wrap = document.getElementById(`svc-img-${key}`);
   const img = document.getElementById(`svc-img-${key}-img`);
   if(wrap&&img){ img.src=url; wrap.style.display='block'; }
-}
-
-function renderPortfolio(items){
-  const grid = document.getElementById('portfolio-grid');
-  if(!items.length){
-    grid.innerHTML = '<div class="portfolio-item"><div class="portfolio-item-ph"><span class="portfolio-item-icon">Próximamente</span></div></div>';
-    return;
-  }
-  grid.innerHTML = '';
-  items.forEach((item,i) => {
-    const el = document.createElement('div');
-    el.className = 'portfolio-item' + (i===0?' fade-up':'');
-    if(i===0) el.style.gridColumn='span 2';
-    el.innerHTML = `<img src="${item.imagen_url}" alt="${item.titulo}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;"/><div class="portfolio-item-label">${item.titulo} · ${item.categoria}</div>`;
-    el.querySelector('img').onmouseover = e => e.target.style.transform='scale(1.04)';
-    el.querySelector('img').onmouseout = e => e.target.style.transform='';
-    grid.appendChild(el);
-  });
 }
 
 // ── ADMIN ──
@@ -816,6 +798,111 @@ async function removePortfolioItem(id){
   renderPortfolio(pf||[]);
 }
 
+// ── COPY EMAIL ──
+function copyEmail(e){
+  e.preventDefault();
+  navigator.clipboard.writeText('valestudio757@gmail.com').then(()=>{
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(()=>toast.classList.remove('show'), 2500);
+  });
+}
+
+// ── CAROUSEL ──
+let carouselItems = [];
+let carouselIdx = 0;
+let carouselTimer = null;
+
+function renderPortfolio(items){
+  const grid = document.getElementById('portfolio-grid');
+  carouselItems = items;
+  carouselIdx = 0;
+  if(!items.length){
+    grid.innerHTML = '<div class="portfolio-item"><div class="portfolio-item-ph"><span class="portfolio-item-icon">Próximamente</span></div></div>';
+    return;
+  }
+  // Build carousel
+  grid.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'carousel-wrap';
+  wrap.style.cssText = 'position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;';
+
+  // Images
+  const imgWrap = document.createElement('div');
+  imgWrap.id = 'carousel-slides';
+  imgWrap.style.cssText = 'display:flex;width:100%;height:100%;transition:transform 0.5s ease;';
+
+  items.forEach((item,i) => {
+    const slide = document.createElement('div');
+    slide.style.cssText = 'min-width:100%;height:100%;position:relative;flex-shrink:0;';
+    slide.innerHTML = '<img src="'+item.imagen_url+'" alt="'+item.titulo+'" style="width:100%;height:100%;object-fit:cover;"/><div style="position:absolute;bottom:0;left:0;right:0;padding:1.25rem;background:linear-gradient(transparent,rgba(0,0,0,0.55));color:#fff;font-family:Cormorant Garamond,serif;font-size:18px;font-weight:300;">'+item.titulo+' · '+item.categoria+'</div>';
+    imgWrap.appendChild(slide);
+  });
+
+  wrap.appendChild(imgWrap);
+
+  // Arrows
+  const prevBtn = document.createElement('button');
+  prevBtn.innerHTML = '←';
+  prevBtn.style.cssText = 'position:absolute;left:1rem;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);color:#fff;border:none;width:40px;height:40px;font-size:18px;cursor:pointer;z-index:10;transition:background 0.2s;';
+  prevBtn.onmouseover = () => prevBtn.style.background='rgba(0,0,0,0.7)';
+  prevBtn.onmouseout = () => prevBtn.style.background='rgba(0,0,0,0.4)';
+  prevBtn.onclick = () => { carouselGo(-1); resetCarouselTimer(); };
+
+  const nextBtn = document.createElement('button');
+  nextBtn.innerHTML = '→';
+  nextBtn.style.cssText = 'position:absolute;right:1rem;top:50%;transform:translateY(-50%);background:rgba(0,0,0,0.4);color:#fff;border:none;width:40px;height:40px;font-size:18px;cursor:pointer;z-index:10;transition:background 0.2s;';
+  nextBtn.onmouseover = () => nextBtn.style.background='rgba(0,0,0,0.7)';
+  nextBtn.onmouseout = () => nextBtn.style.background='rgba(0,0,0,0.4)';
+  nextBtn.onclick = () => { carouselGo(1); resetCarouselTimer(); };
+
+  // Dots
+  const dots = document.createElement('div');
+  dots.id = 'carousel-dots';
+  dots.style.cssText = 'position:absolute;bottom:0.75rem;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:10;';
+  items.forEach((_,i) => {
+    const dot = document.createElement('div');
+    dot.style.cssText = 'width:6px;height:6px;border-radius:50%;background:'+(i===0?'#fff':'rgba(255,255,255,0.4)')+';cursor:pointer;transition:background 0.2s;';
+    dot.onclick = () => { carouselSet(i); resetCarouselTimer(); };
+    dots.appendChild(dot);
+  });
+
+  wrap.appendChild(prevBtn);
+  wrap.appendChild(nextBtn);
+  wrap.appendChild(dots);
+  grid.appendChild(wrap);
+  startCarouselTimer();
+}
+
+function carouselGo(dir){
+  if(!carouselItems.length) return;
+  carouselIdx = (carouselIdx + dir + carouselItems.length) % carouselItems.length;
+  updateCarousel();
+}
+
+function carouselSet(idx){
+  carouselIdx = idx;
+  updateCarousel();
+}
+
+function updateCarousel(){
+  const slides = document.getElementById('carousel-slides');
+  if(slides) slides.style.transform = 'translateX(-'+carouselIdx*100+'%)';
+  const dots = document.querySelectorAll('#carousel-dots div');
+  dots.forEach((d,i) => d.style.background = i===carouselIdx?'#fff':'rgba(255,255,255,0.4)');
+}
+
+function startCarouselTimer(){
+  clearInterval(carouselTimer);
+  if(carouselItems.length > 1){
+    carouselTimer = setInterval(() => carouselGo(1), 4000);
+  }
+}
+
+function resetCarouselTimer(){
+  startCarouselTimer();
+}
+
 // ── INIT ──
 emailjs.init('re3ob2fAcLzXxa_A8');
 loadSiteData();
@@ -838,5 +925,8 @@ document.querySelector('.footer-logo-name').addEventListener('click', () => {
   if(clickCount >= 3) { clickCount = 0; openAdmin(); }
 });
 </script>
+
+<div id="toast" style="position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);background:var(--black);color:var(--white);font-family:'DM Sans',sans-serif;font-size:13px;padding:12px 24px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;letter-spacing:0.5px;">Mail copiado</div>
+<style>#toast.show{opacity:1;}</style>
 </body>
 </html>
