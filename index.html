@@ -186,6 +186,12 @@
     .admin-btn{background:var(--white);color:var(--black);font-family:"DM Sans",sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;padding:11px 22px;border:none;cursor:pointer;transition:opacity 0.2s;}
     .admin-btn:hover{opacity:0.85;}
     .admin-btn-red{background:rgba(239,68,68,0.15);color:#f87171;border:0.5px solid rgba(239,68,68,0.2);}
+    .admin-svc-block{margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:0.5px solid rgba(255,255,255,0.06);}
+    .admin-svc-block:last-child{border-bottom:none;}
+    .admin-multi-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px;}
+    .admin-multi-thumb{position:relative;width:70px;height:70px;}
+    .admin-multi-thumb img{width:100%;height:100%;object-fit:cover;}
+    .admin-multi-remove{position:absolute;top:-4px;right:-4px;background:#ef4444;border:none;color:#fff;width:18px;height:18px;border-radius:50%;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;line-height:1;}
     .admin-btn-red:hover{background:rgba(239,68,68,0.25);opacity:1;}
     .admin-msg{font-size:12px;margin-top:8px;height:16px;}
     .admin-msg.ok{color:#4ade80;}
@@ -240,7 +246,7 @@
     <li><a href="#imprimir">Imprimí</a></li>
   </ul>
   <div style="display:flex;gap:12px;align-items:center;">
-<a href="#contacto" class="nav-cta">Hablemos</a>
+<a href="#" class="nav-cta" onclick="copyEmail(event)">Hablemos</a>
   </div>
   <button class="nav-hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </nav>
@@ -253,7 +259,7 @@
   <a href="#portfolio" onclick="toggleMenu()">Portfolio</a>
   <a href="#sobre-mi" onclick="toggleMenu()">Sobre mí</a>
   <a href="#imprimir" onclick="toggleMenu()">Imprimí</a>
-  <a href="#contacto" onclick="toggleMenu()">Hablemos</a>
+  <a href="#" onclick="toggleMenu();copyEmail(event)">Hablemos</a>
 </div>
 
 <!-- HERO -->
@@ -322,7 +328,7 @@
     <div class="section-eyebrow">Sobre mí</div>
     <h2 class="section-title">Diseñadora gráfica<br>y creadora de<br><em>historias visuales.</em></h2>
     <p class="section-body">Ayudo a marcas y emprendedores a comunicar su esencia a través del diseño, la fotografía y el contenido. Cada proyecto es único y lo abordo con compromiso, creatividad y atención al detalle.</p>
-    <a href="#contacto" class="btn-dark">Hablemos →</a>
+    <a href="#" class="btn-dark" onclick="copyEmail(event)">Hablemos →</a>
   </div>
 </section>
 
@@ -333,7 +339,7 @@
       <div class="section-eyebrow">Portfolio</div>
       <h2 class="section-title" style="margin-bottom:0">Algunos proyectos<br><em>en los que trabajé.</em></h2>
     </div>
-    <a href="#contacto" class="btn-outline">Hablemos →</a>
+    <a href="#" class="btn-outline" onclick="copyEmail(event)">Hablemos →</a>
   </div>
   <div class="portfolio-grid" id="portfolio-grid">
     <div class="portfolio-item"><div class="portfolio-item-ph"><span class="portfolio-item-icon">Portfolio</span></div><div class="portfolio-item-label">Cargando...</div></div>
@@ -404,7 +410,7 @@
   <div class="fade-up">
     <h2 class="contact-cta-title">¿Listo para trabajar<br><em>juntos?</em></h2>
   </div>
-  <a href="mailto:valestudio757@gmail.com" class="btn-dark" style="background:var(--white);color:var(--black);">Hablemos →</a>
+  <a href="#" class="btn-dark" style="background:var(--white);color:var(--black);" onclick="copyEmail(event)">Hablemos →</a>
 </section>
 
 <!-- FOOTER -->
@@ -471,42 +477,39 @@
 
       <!-- IMÁGENES SERVICIOS -->
       <div class="admin-section">
-        <div class="admin-section-title">Imágenes de servicios</div>
-        <div class="admin-img-row">
-          <div id="prev-diseno" class="admin-img-placeholder">Diseño</div>
-          <div>
-            <div class="admin-img-label">Diseño Gráfico</div>
-            <button class="admin-upload-btn" onclick="document.getElementById('up-diseno').click()">Subir imagen</button>
-            <input type="file" id="up-diseno" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_diseno','prev-diseno','svc-diseno')"/>
-            <div class="admin-msg" id="msg-diseno"></div>
-          </div>
+        <div class="admin-section-title">Imágenes de servicios (máx. 20 por apartado)</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:1rem;">Las imágenes de cada servicio rotan automáticamente en la página.</div>
+        
+        <div class="admin-svc-block">
+          <div class="admin-img-label" style="margin-bottom:8px;">Diseño Gráfico</div>
+          <div id="svc-imgs-diseno" class="admin-multi-grid"></div>
+          <button class="admin-upload-btn" onclick="document.getElementById('up-diseno').click()">+ Agregar imagen</button>
+          <input type="file" id="up-diseno" accept="image/*" multiple style="display:none" onchange="uploadSvcMulti(event,'diseno')"/>
+          <div class="admin-msg" id="msg-diseno"></div>
         </div>
-        <div class="admin-img-row">
-          <div id="prev-foto" class="admin-img-placeholder">Foto</div>
-          <div>
-            <div class="admin-img-label">Fotografía</div>
-            <button class="admin-upload-btn" onclick="document.getElementById('up-foto').click()">Subir imagen</button>
-            <input type="file" id="up-foto" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_fotografia','prev-foto','svc-fotografia')"/>
-            <div class="admin-msg" id="msg-foto"></div>
-          </div>
+
+        <div class="admin-svc-block">
+          <div class="admin-img-label" style="margin-bottom:8px;">Fotografía</div>
+          <div id="svc-imgs-fotografia" class="admin-multi-grid"></div>
+          <button class="admin-upload-btn" onclick="document.getElementById('up-foto').click()">+ Agregar imagen</button>
+          <input type="file" id="up-foto" accept="image/*" multiple style="display:none" onchange="uploadSvcMulti(event,'fotografia')"/>
+          <div class="admin-msg" id="msg-foto"></div>
         </div>
-        <div class="admin-img-row">
-          <div id="prev-community" class="admin-img-placeholder">Community</div>
-          <div>
-            <div class="admin-img-label">Community Manager</div>
-            <button class="admin-upload-btn" onclick="document.getElementById('up-community').click()">Subir imagen</button>
-            <input type="file" id="up-community" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_community','prev-community','svc-community')"/>
-            <div class="admin-msg" id="msg-community"></div>
-          </div>
+
+        <div class="admin-svc-block">
+          <div class="admin-img-label" style="margin-bottom:8px;">Community Manager</div>
+          <div id="svc-imgs-community" class="admin-multi-grid"></div>
+          <button class="admin-upload-btn" onclick="document.getElementById('up-community').click()">+ Agregar imagen</button>
+          <input type="file" id="up-community" accept="image/*" multiple style="display:none" onchange="uploadSvcMulti(event,'community')"/>
+          <div class="admin-msg" id="msg-community"></div>
         </div>
-        <div class="admin-img-row">
-          <div id="prev-papeleria" class="admin-img-placeholder">Papelería</div>
-          <div>
-            <div class="admin-img-label">Papelería Creativa</div>
-            <button class="admin-upload-btn" onclick="document.getElementById('up-papeleria').click()">Subir imagen</button>
-            <input type="file" id="up-papeleria" accept="image/*" style="display:none" onchange="uploadConfig(event,'img_papeleria','prev-papeleria','svc-papeleria')"/>
-            <div class="admin-msg" id="msg-papeleria"></div>
-          </div>
+
+        <div class="admin-svc-block">
+          <div class="admin-img-label" style="margin-bottom:8px;">Papelería Creativa</div>
+          <div id="svc-imgs-papeleria" class="admin-multi-grid"></div>
+          <button class="admin-upload-btn" onclick="document.getElementById('up-papeleria').click()">+ Agregar imagen</button>
+          <input type="file" id="up-papeleria" accept="image/*" multiple style="display:none" onchange="uploadSvcMulti(event,'papeleria')"/>
+          <div class="admin-msg" id="msg-papeleria"></div>
         </div>
       </div>
 
@@ -646,10 +649,9 @@ async function loadSiteData(){
         img.src = row.valor; img.style.cssText='width:100%;height:100%;object-fit:cover;';
         wrap.insertBefore(img, wrap.firstChild);
       }
-      if(row.clave === 'img_diseno') showSvcImg('diseno', row.valor);
-      if(row.clave === 'img_fotografia') showSvcImg('fotografia', row.valor);
-      if(row.clave === 'img_community') showSvcImg('community', row.valor);
-      if(row.clave === 'img_papeleria') showSvcImg('papeleria', row.valor);
+      const svcMap2={'img_diseno':'diseno','img_fotografia':'fotografia','img_community':'community','img_papeleria':'papeleria'};
+      const sk=svcMap2[row.clave];
+      if(sk){let imgs=[];try{imgs=JSON.parse(row.valor);}catch(e){if(row.valor)imgs=[row.valor];}updateSvcDisplay(sk,imgs);}
     });
   }
   // Load portfolio
@@ -684,19 +686,93 @@ function adminLogin(){
   }
 }
 
+// Service images stored as JSON arrays in config
+async function uploadSvcMulti(e, svcKey){
+  const files = Array.from(e.target.files);
+  if(!files.length) return;
+  const msgEl = document.getElementById('msg-' + (svcKey==='fotografia'?'foto':svcKey==='community'?'community':svcKey==='papeleria'?'papeleria':'diseno'));
+  if(msgEl){msgEl.className='admin-msg';msgEl.textContent='Subiendo...';}
+  
+  // Get existing images
+  const {data:cfg} = await sb.from('config').select('valor').eq('clave','img_'+svcKey).single();
+  let existing = [];
+  try{ existing = JSON.parse(cfg?.valor||'[]'); }catch(e){ if(cfg?.valor) existing=[cfg.valor]; }
+  
+  const MAX = 20;
+  if(existing.length >= MAX){ if(msgEl){msgEl.className='admin-msg err';msgEl.textContent='Límite de '+MAX+' imágenes alcanzado.';} return; }
+  
+  let uploaded = 0;
+  for(const file of files.slice(0, MAX - existing.length)){
+    try{
+      const url = await uploadToCloudinary(file);
+      existing.push(url);
+      uploaded++;
+    }catch(err){ console.error(err); }
+  }
+  
+  await sb.from('config').update({valor:JSON.stringify(existing), updated_at:new Date().toISOString()}).eq('clave','img_'+svcKey);
+  if(msgEl){msgEl.className='admin-msg ok';msgEl.textContent='✓ '+uploaded+' imagen(es) agregada(s)';}
+  renderAdminSvcImgs(svcKey, existing);
+  updateSvcDisplay(svcKey, existing);
+}
+
+async function removeSvcImg(svcKey, idx){
+  const {data:cfg} = await sb.from('config').select('valor').eq('clave','img_'+svcKey).single();
+  let imgs = [];
+  try{ imgs = JSON.parse(cfg?.valor||'[]'); }catch(e){ if(cfg?.valor) imgs=[cfg.valor]; }
+  imgs.splice(idx,1);
+  await sb.from('config').update({valor:JSON.stringify(imgs), updated_at:new Date().toISOString()}).eq('clave','img_'+svcKey);
+  renderAdminSvcImgs(svcKey, imgs);
+  updateSvcDisplay(svcKey, imgs);
+}
+
+function renderAdminSvcImgs(svcKey, imgs){
+  const grid = document.getElementById('svc-imgs-'+svcKey);
+  if(!grid) return;
+  grid.innerHTML='';
+  imgs.forEach((url,i)=>{
+    const wrap=document.createElement('div');wrap.className='admin-multi-thumb';
+    const btn = document.createElement('button');
+    btn.className='admin-multi-remove';
+    btn.textContent='×';
+    btn.onclick=(()=>{const k=svcKey,j=i;return()=>removeSvcImg(k,j);})();
+    const imgEl=document.createElement('img');
+    imgEl.src=url;imgEl.alt='';
+    wrap.appendChild(imgEl);
+    wrap.appendChild(btn);
+    grid.appendChild(wrap);
+  });
+}
+
+// Rotate service images on the public page
+const svcTimers={};
+function updateSvcDisplay(svcKey, imgs){
+  clearInterval(svcTimers[svcKey]);
+  const wrap=document.getElementById('svc-img-'+svcKey);
+  const img=document.getElementById('svc-img-'+svcKey+'-img');
+  if(!wrap||!img||!imgs||!imgs.length) return;
+  img.src=imgs[0]; wrap.style.display='block';
+  if(imgs.length>1){
+    let idx=0;
+    svcTimers[svcKey]=setInterval(()=>{
+      idx=(idx+1)%imgs.length;
+      img.src=imgs[idx];
+    },3000);
+  }
+}
+
 async function loadAdminData(){
   const {data:cfg} = await sb.from('config').select('*');
   if(cfg) cfg.forEach(row => {
     if(!row.valor) return;
-    const previewMap = {
-      'foto_perfil':'prev-perfil',
-      'img_diseno':'prev-diseno',
-      'img_fotografia':'prev-foto',
-      'img_community':'prev-community',
-      'img_papeleria':'prev-papeleria'
-    };
-    const prevId = previewMap[row.clave];
-    if(prevId) setAdminPreview(prevId, row.valor);
+    if(row.clave==='foto_perfil'){setAdminPreview('prev-perfil',row.valor);return;}
+    const svcMap={'img_diseno':'diseno','img_fotografia':'fotografia','img_community':'community','img_papeleria':'papeleria'};
+    const svcKey=svcMap[row.clave];
+    if(svcKey){
+      let imgs=[];
+      try{imgs=JSON.parse(row.valor);}catch(e){if(row.valor)imgs=[row.valor];}
+      renderAdminSvcImgs(svcKey,imgs);
+    }
   });
   const {data:pf} = await sb.from('portfolio').select('*').order('orden');
   renderAdminPortfolio(pf||[]);
