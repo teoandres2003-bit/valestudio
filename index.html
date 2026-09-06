@@ -200,6 +200,36 @@
     .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,0.2);border-top-color:var(--white);border-radius:50%;animation:spin 0.7s linear infinite;}
     @keyframes spin{to{transform:rotate(360deg);}}
 
+    /* PROYECTOS MODAL */
+    .proy-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(14,14,14,0.96);padding:2rem;overflow-y:auto;}
+    .proy-overlay.open{display:flex;align-items:center;justify-content:center;}
+    .proy-box{position:relative;max-width:1000px;width:100%;background:var(--cream);max-height:88vh;display:flex;flex-direction:column;}
+    .proy-top{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2rem 1rem;}
+    .proy-top-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);}
+    .proy-close{background:none;border:none;font-size:26px;color:var(--black);cursor:pointer;line-height:1;}
+    .proy-body{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;padding:0 2rem 2rem;overflow-y:auto;}
+    .proy-images{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;align-content:start;}
+    .proy-images img{width:100%;aspect-ratio:4/3;object-fit:cover;cursor:pointer;transition:opacity 0.2s;}
+    .proy-images img:hover{opacity:0.8;}
+    .proy-info{display:flex;flex-direction:column;padding-top:0.5rem;}
+    .proy-info-cliente{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;}
+    .proy-info-titulo{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:400;color:var(--black);margin-bottom:1rem;line-height:1.15;}
+    .proy-info-desc{font-size:14px;line-height:1.8;color:var(--muted);font-weight:300;}
+    .proy-nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem 1.5rem;border-top:0.5px solid var(--border);margin-top:auto;}
+    .proy-arrow{background:none;border:1px solid var(--black);width:38px;height:38px;font-size:16px;cursor:pointer;transition:all 0.2s;}
+    .proy-arrow:hover{background:var(--black);color:var(--white);}
+    .proy-counter{font-size:11px;letter-spacing:1.5px;color:var(--muted);}
+    .proy-empty{padding:4rem 2rem;text-align:center;font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--muted);}
+    @media(max-width:768px){
+      .proy-body{grid-template-columns:1fr;}
+      .proy-images{grid-template-columns:repeat(2,1fr);}
+    }
+
+    /* LIGHTBOX */
+    .lightbox{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:2rem;cursor:zoom-out;}
+    .lightbox.open{display:flex;}
+    .lightbox img{max-width:100%;max-height:100%;object-fit:contain;}
+
     /* ANIMATIONS */
     .fade-up{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s ease;}
     .fade-up.visible{opacity:1;transform:translateY(0);}
@@ -289,7 +319,7 @@
       <svg class="service-icon" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><circle cx="11" cy="11" r="2"/></svg>
       <div class="service-name">Diseño Gráfico</div>
       <div class="service-desc">Identidad visual, piezas para redes, editorial, papelería y más.</div>
-      <a href="#contacto" class="service-link">Ver más →</a>
+      <a href="#" class="service-link" onclick="return openProyModal(event,'diseno','Diseño Gráfico')">Ver más →</a>
     </div>
     <div class="service-item fade-up">
       <div id="svc-img-fotografia" style="display:none;width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:0.5rem;"><img style="width:100%;height:100%;object-fit:cover;" id="svc-img-fotografia-img" src="" alt=""/></div>
@@ -303,14 +333,14 @@
       <svg class="service-icon" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
       <div class="service-name">Community Manager</div>
       <div class="service-desc">Estrategia de contenido, gestión de redes y calendario editorial.</div>
-      <a href="#contacto" class="service-link">Ver más →</a>
+      <a href="#" class="service-link" onclick="return openProyModal(event,'community','Community Manager')">Ver más →</a>
     </div>
     <div class="service-item fade-up">
       <div id="svc-img-papeleria" style="display:none;width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:0.5rem;"><img style="width:100%;height:100%;object-fit:cover;" id="svc-img-papeleria-img" src="" alt=""/></div>
       <svg class="service-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       <div class="service-name">Papelería Creativa</div>
       <div class="service-desc">Diseños únicos para momentos especiales y marcas con personalidad.</div>
-      <a href="#contacto" class="service-link">Ver más →</a>
+      <a href="#" class="service-link" onclick="return openProyModal(event,'papeleria','Papelería Creativa')">Ver más →</a>
     </div>
   </div>
 </section>
@@ -441,6 +471,22 @@
   </div>
 </footer>
 
+<!-- MODAL PROYECTOS (Diseño / CM / Papelería) -->
+<div class="proy-overlay" id="proy-overlay">
+  <div class="proy-box">
+    <div class="proy-top">
+      <div class="proy-top-label" id="proy-top-label"></div>
+      <button class="proy-close" onclick="closeProyModal()">×</button>
+    </div>
+    <div id="proy-content"></div>
+  </div>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt=""/>
+</div>
+
 <!-- ADMIN PANEL -->
 <div class="admin-overlay" id="admin-overlay">
   <div class="admin-box">
@@ -510,6 +556,31 @@
           <button class="admin-upload-btn" onclick="document.getElementById('up-papeleria').click()">+ Agregar imagen</button>
           <input type="file" id="up-papeleria" accept="image/*" multiple style="display:none" onchange="uploadSvcMulti(event,'papeleria')"/>
           <div class="admin-msg" id="msg-papeleria"></div>
+        </div>
+      </div>
+
+      <!-- PROYECTOS POR SERVICIO -->
+      <div class="admin-section">
+        <div class="admin-section-title">Proyectos (Diseño / Community / Papelería)</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:1rem;">Cada proyecto es un grupo de hasta 10 imágenes con su propia descripción, que se ve en el "Ver más" de cada servicio.</div>
+        <select class="admin-select" id="proy-admin-servicio" onchange="loadAdminProyectos()">
+          <option value="diseno">Diseño Gráfico</option>
+          <option value="community">Community Manager</option>
+          <option value="papeleria">Papelería Creativa</option>
+        </select>
+        <div id="proy-admin-list" style="margin-bottom:1rem;"></div>
+
+        <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);padding:1.25rem;">
+          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem;">Agregar proyecto</div>
+          <input class="admin-input" id="proy-admin-titulo" placeholder="Título del proyecto (ej: Piazzo)"/>
+          <input class="admin-input" id="proy-admin-cliente" placeholder="Cliente (opcional)"/>
+          <textarea class="admin-input" id="proy-admin-desc" maxlength="300" placeholder="Descripción breve (máx. 300 caracteres)" style="height:70px;resize:none;" oninput="document.getElementById('proy-admin-count').textContent=this.value.length"></textarea>
+          <div style="font-size:10px;color:rgba(255,255,255,0.25);margin-bottom:10px;text-align:right;"><span id="proy-admin-count">0</span>/300</div>
+          <button class="admin-upload-btn" style="margin-bottom:8px" onclick="document.getElementById('proy-admin-imgs').click()">Seleccionar imágenes (máx. 10)</button>
+          <input type="file" id="proy-admin-imgs" accept="image/*" multiple style="display:none" onchange="previewProyImgs(event)"/>
+          <div id="proy-admin-preview" class="admin-multi-grid"></div>
+          <div style="margin-top:8px;"><button class="admin-btn" onclick="addProyecto()">Agregar proyecto</button></div>
+          <div class="admin-msg" id="proy-admin-msg"></div>
         </div>
       </div>
 
@@ -624,7 +695,7 @@ async function submitForm(){
     await emailjs.send('service_p612nrh', 'template_u2432f1', {
       nombre, contacto,
       archivos: archivosTexto,
-      copias, tipo,
+      copias: hojas, tipo,
       color: selectedColor,
       observaciones: obs || 'Ninguna'
     });
@@ -776,6 +847,7 @@ async function loadAdminData(){
   });
   const {data:pf} = await sb.from('portfolio').select('*').order('orden');
   renderAdminPortfolio(pf||[]);
+  loadAdminProyectos();
 }
 
 function setAdminPreview(id, url){
@@ -872,6 +944,162 @@ async function removePortfolioItem(id){
   const {data:pf} = await sb.from('portfolio').select('*').order('orden');
   renderAdminPortfolio(pf||[]);
   renderPortfolio(pf||[]);
+}
+
+// ── MODAL PROYECTOS (PÚBLICO) ──
+let proyModalServicio = null, proyModalItems = [], proyModalIdx = 0;
+
+async function openProyModal(e, servicio, label){
+  if(e) e.preventDefault();
+  proyModalServicio = servicio;
+  document.getElementById('proy-top-label').textContent = label;
+  document.getElementById('proy-overlay').classList.add('open');
+  document.getElementById('proy-content').innerHTML = '<div class="proy-empty">Cargando...</div>';
+
+  const {data, error} = await sb.from('proyectos').select('*').eq('servicio', servicio).order('orden');
+  proyModalItems = data || [];
+  proyModalIdx = 0;
+
+  if(error || !proyModalItems.length){
+    document.getElementById('proy-content').innerHTML = '<div class="proy-empty">Todavía no hay proyectos cargados acá.<br>¡Volvé pronto!</div>';
+    return false;
+  }
+  await renderProyModal();
+  return false;
+}
+
+function closeProyModal(){
+  document.getElementById('proy-overlay').classList.remove('open');
+}
+
+async function renderProyModal(){
+  const proy = proyModalItems[proyModalIdx];
+  const content = document.getElementById('proy-content');
+  content.innerHTML = '<div class="proy-empty">Cargando...</div>';
+
+  const {data:imgs} = await sb.from('proyecto_imagenes').select('*').eq('proyecto_id', proy.id).order('orden');
+  const imagenes = imgs || [];
+
+  const imagesHtml = imagenes.length
+    ? imagenes.map(im => '<img src="'+im.imagen_url+'" alt="" onclick="openLightbox(\''+im.imagen_url+'\')"/>').join('')
+    : '<div style="grid-column:1/-1;font-size:12px;color:var(--muted);">Sin imágenes en este proyecto.</div>';
+
+  content.innerHTML = `
+    <div class="proy-body">
+      <div class="proy-images">${imagesHtml}</div>
+      <div class="proy-info">
+        ${proy.cliente ? '<div class="proy-info-cliente">'+proy.cliente+'</div>' : ''}
+        <div class="proy-info-titulo">${proy.titulo}</div>
+        <div class="proy-info-desc">${proy.descripcion || ''}</div>
+      </div>
+    </div>
+    <div class="proy-nav">
+      <button class="proy-arrow" onclick="proyNav(-1)" ${proyModalItems.length<2?'style="visibility:hidden"':''}>←</button>
+      <div class="proy-counter">${proyModalIdx+1} / ${proyModalItems.length}</div>
+      <button class="proy-arrow" onclick="proyNav(1)" ${proyModalItems.length<2?'style="visibility:hidden"':''}>→</button>
+    </div>
+  `;
+}
+
+function proyNav(dir){
+  proyModalIdx = (proyModalIdx + dir + proyModalItems.length) % proyModalItems.length;
+  renderProyModal();
+}
+
+function openLightbox(url){
+  document.getElementById('lightbox-img').src = url;
+  document.getElementById('lightbox').classList.add('open');
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+// ── ADMIN: PROYECTOS ──
+let proyAdminFiles = [];
+
+async function loadAdminProyectos(){
+  const servicio = document.getElementById('proy-admin-servicio').value;
+  const list = document.getElementById('proy-admin-list');
+  list.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.2);">Cargando...</div>';
+  const {data} = await sb.from('proyectos').select('*, proyecto_imagenes(count)').eq('servicio', servicio).order('orden');
+  renderAdminProyList(data || []);
+}
+
+function renderAdminProyList(items){
+  const list = document.getElementById('proy-admin-list');
+  if(!items.length){ list.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.2);margin-bottom:1rem;">Sin proyectos en este servicio todavía.</div>'; return; }
+  list.innerHTML = items.map(item => {
+    const count = item.proyecto_imagenes && item.proyecto_imagenes[0] ? item.proyecto_imagenes[0].count : 0;
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);">'
+      + '<div style="flex:1;">'
+      + '<div style="font-size:13px;color:rgba(255,255,255,0.7);">'+item.titulo+(item.cliente?' · '+item.cliente:'')+'</div>'
+      + '<div style="font-size:11px;color:rgba(255,255,255,0.3);">'+count+' imagen(es)</div>'
+      + '</div>'
+      + '<button class="admin-btn admin-btn-red" onclick="removeProyecto(\''+item.id+'\')">Eliminar</button>'
+      + '</div>';
+  }).join('');
+}
+
+function previewProyImgs(e){
+  proyAdminFiles = Array.from(e.target.files).slice(0, 10);
+  const prev = document.getElementById('proy-admin-preview');
+  prev.innerHTML = '';
+  proyAdminFiles.forEach(f => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const wrap = document.createElement('div');
+      wrap.className = 'admin-multi-thumb';
+      wrap.innerHTML = '<img src="'+ev.target.result+'" alt=""/>';
+      prev.appendChild(wrap);
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+async function addProyecto(){
+  const servicio = document.getElementById('proy-admin-servicio').value;
+  const titulo = document.getElementById('proy-admin-titulo').value.trim();
+  const cliente = document.getElementById('proy-admin-cliente').value.trim();
+  const descripcion = document.getElementById('proy-admin-desc').value.trim();
+  const msg = document.getElementById('proy-admin-msg');
+
+  if(!titulo){ msg.className='admin-msg err'; msg.textContent='Poné un título para el proyecto.'; return; }
+  if(!proyAdminFiles.length){ msg.className='admin-msg err'; msg.textContent='Seleccioná al menos una imagen.'; return; }
+
+  msg.className='admin-msg'; msg.textContent='Subiendo imágenes...';
+  try{
+    const urls = [];
+    for(const file of proyAdminFiles){
+      urls.push(await uploadToCloudinary(file));
+    }
+    const {data:existing} = await sb.from('proyectos').select('orden').eq('servicio', servicio).order('orden',{ascending:false}).limit(1);
+    const orden = existing && existing.length ? existing[0].orden + 1 : 0;
+
+    const {data:inserted, error} = await sb.from('proyectos').insert({servicio, titulo, cliente, descripcion, orden}).select().single();
+    if(error) throw error;
+
+    const imgRows = urls.map((url,i) => ({proyecto_id: inserted.id, imagen_url: url, orden: i}));
+    await sb.from('proyecto_imagenes').insert(imgRows);
+
+    msg.className='admin-msg ok'; msg.textContent='✓ Proyecto agregado';
+    document.getElementById('proy-admin-titulo').value='';
+    document.getElementById('proy-admin-cliente').value='';
+    document.getElementById('proy-admin-desc').value='';
+    document.getElementById('proy-admin-count').textContent='0';
+    document.getElementById('proy-admin-preview').innerHTML='';
+    proyAdminFiles = [];
+    loadAdminProyectos();
+  } catch(err){
+    msg.className='admin-msg err'; msg.textContent='Error: '+err.message;
+  }
+}
+
+async function removeProyecto(id){
+  if(!confirm('¿Eliminar este proyecto y todas sus imágenes?')) return;
+  await sb.from('proyecto_imagenes').delete().eq('proyecto_id', id);
+  await sb.from('proyectos').delete().eq('id', id);
+  loadAdminProyectos();
 }
 
 // ── COPY EMAIL ──
