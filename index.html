@@ -201,28 +201,36 @@
     @keyframes spin{to{transform:rotate(360deg);}}
 
     /* PROYECTOS MODAL */
-    .proy-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(14,14,14,0.96);padding:2rem;overflow-y:auto;}
-    .proy-overlay.open{display:flex;align-items:center;justify-content:center;}
-    .proy-box{position:relative;max-width:1000px;width:100%;background:var(--cream);max-height:88vh;display:flex;flex-direction:column;}
-    .proy-top{display:flex;align-items:center;justify-content:space-between;padding:1.5rem 2rem 1rem;}
-    .proy-top-label{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);}
-    .proy-close{background:none;border:none;font-size:26px;color:var(--black);cursor:pointer;line-height:1;}
-    .proy-body{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;padding:0 2rem 2rem;overflow-y:auto;}
-    .proy-images{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;align-content:start;}
-    .proy-images img{width:100%;aspect-ratio:4/3;object-fit:cover;cursor:pointer;transition:opacity 0.2s;}
-    .proy-images img:hover{opacity:0.8;}
-    .proy-info{display:flex;flex-direction:column;padding-top:0.5rem;}
-    .proy-info-cliente{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:0.75rem;}
-    .proy-info-titulo{font-family:"Cormorant Garamond",serif;font-size:32px;font-weight:400;color:var(--black);margin-bottom:1rem;line-height:1.15;}
-    .proy-info-desc{font-size:14px;line-height:1.8;color:var(--muted);font-weight:300;}
-    .proy-nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem 1.5rem;border-top:0.5px solid var(--border);margin-top:auto;}
-    .proy-arrow{background:none;border:1px solid var(--black);width:38px;height:38px;font-size:16px;cursor:pointer;transition:all 0.2s;}
-    .proy-arrow:hover{background:var(--black);color:var(--white);}
-    .proy-counter{font-size:11px;letter-spacing:1.5px;color:var(--muted);}
-    .proy-empty{padding:4rem 2rem;text-align:center;font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--muted);}
+    :root{--proy-accent:#C9A97E;}
+    .proy-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);padding:2rem;align-items:center;justify-content:center;}
+    .proy-overlay.open{display:flex;}
+    .proy-arrow-fixed{position:fixed;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:transparent;border:1px solid rgba(255,255,255,0.4);color:var(--white);font-size:16px;cursor:pointer;transition:all 0.2s;z-index:301;display:flex;align-items:center;justify-content:center;}
+    .proy-arrow-fixed:hover{background:rgba(255,255,255,0.1);border-color:var(--white);}
+    .proy-arrow-left{left:2rem;}
+    .proy-arrow-right{right:2rem;}
+    .proy-box{position:relative;max-width:1200px;width:100%;background:#161616;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;}
+    .proy-top{display:flex;align-items:center;justify-content:flex-end;padding:1.25rem 1.75rem 0;flex-shrink:0;}
+    .proy-close{background:none;border:none;font-size:26px;color:rgba(255,255,255,0.7);cursor:pointer;line-height:1;transition:color 0.2s;}
+    .proy-close:hover{color:var(--white);}
+    .proy-body{display:grid;grid-template-columns:1.15fr 1fr;gap:3rem;padding:1.5rem 2.5rem 2.5rem;overflow-y:auto;}
+    .proy-images{column-count:2;column-gap:10px;}
+    .proy-images img{width:100%;display:block;margin-bottom:10px;cursor:pointer;transition:opacity 0.2s;break-inside:avoid;}
+    .proy-images img:hover{opacity:0.82;}
+    .proy-info{display:flex;flex-direction:column;padding-top:0.25rem;}
+    .proy-info-cliente{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:0.75rem;}
+    .proy-info-titulo{font-family:"Cormorant Garamond",serif;font-size:36px;font-weight:400;color:var(--white);margin-bottom:1.25rem;line-height:1.15;}
+    .proy-info-divider{width:40px;height:1px;background:var(--proy-accent);margin-bottom:1.5rem;}
+    .proy-info-desc{font-size:14px;line-height:1.85;color:rgba(255,255,255,0.55);font-weight:300;margin-bottom:auto;}
+    .proy-info-footer{margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid rgba(255,255,255,0.1);}
+    .proy-info-de{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:0.4rem;}
+    .proy-info-cliente-line{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);}
+    .proy-empty{padding:5rem 2rem;text-align:center;font-family:"Cormorant Garamond",serif;font-size:22px;color:rgba(255,255,255,0.4);}
     @media(max-width:768px){
-      .proy-body{grid-template-columns:1fr;}
-      .proy-images{grid-template-columns:repeat(2,1fr);}
+      .proy-body{grid-template-columns:1fr;gap:1.5rem;padding:1.25rem 1.5rem 2rem;}
+      .proy-top{padding:1.25rem 1.5rem 0.25rem;}
+      .proy-arrow-fixed{width:38px;height:38px;font-size:14px;}
+      .proy-arrow-left{left:0.5rem;}
+      .proy-arrow-right{right:0.5rem;}
     }
 
     /* LIGHTBOX */
@@ -473,13 +481,14 @@
 
 <!-- MODAL PROYECTOS (Diseño / CM / Papelería) -->
 <div class="proy-overlay" id="proy-overlay">
+  <button class="proy-arrow-fixed proy-arrow-left" id="proy-arrow-left" onclick="proyNav(-1)">←</button>
   <div class="proy-box">
     <div class="proy-top">
-      <div class="proy-top-label" id="proy-top-label"></div>
       <button class="proy-close" onclick="closeProyModal()">×</button>
     </div>
     <div id="proy-content"></div>
   </div>
+  <button class="proy-arrow-fixed proy-arrow-right" id="proy-arrow-right" onclick="proyNav(1)">→</button>
 </div>
 
 <!-- LIGHTBOX -->
@@ -947,14 +956,20 @@ async function removePortfolioItem(id){
 }
 
 // ── MODAL PROYECTOS (PÚBLICO) ──
-let proyModalServicio = null, proyModalItems = [], proyModalIdx = 0;
+let proyModalServicio = null, proyModalLabel = '', proyModalItems = [], proyModalIdx = 0;
+
+function setProyArrows(visible){
+  document.getElementById('proy-arrow-left').style.display = visible ? 'flex' : 'none';
+  document.getElementById('proy-arrow-right').style.display = visible ? 'flex' : 'none';
+}
 
 async function openProyModal(e, servicio, label){
   if(e) e.preventDefault();
   proyModalServicio = servicio;
-  document.getElementById('proy-top-label').textContent = label;
+  proyModalLabel = label;
   document.getElementById('proy-overlay').classList.add('open');
   document.getElementById('proy-content').innerHTML = '<div class="proy-empty">Cargando...</div>';
+  setProyArrows(false);
 
   const {data, error} = await sb.from('proyectos').select('*').eq('servicio', servicio).order('orden');
   proyModalItems = data || [];
@@ -964,6 +979,7 @@ async function openProyModal(e, servicio, label){
     document.getElementById('proy-content').innerHTML = '<div class="proy-empty">Todavía no hay proyectos cargados acá.<br>¡Volvé pronto!</div>';
     return false;
   }
+  setProyArrows(proyModalItems.length > 1);
   await renderProyModal();
   return false;
 }
@@ -982,21 +998,23 @@ async function renderProyModal(){
 
   const imagesHtml = imagenes.length
     ? imagenes.map(im => '<img src="'+im.imagen_url+'" alt="" onclick="openLightbox(\''+im.imagen_url+'\')"/>').join('')
-    : '<div style="grid-column:1/-1;font-size:12px;color:var(--muted);">Sin imágenes en este proyecto.</div>';
+    : '<div style="font-size:12px;color:rgba(255,255,255,0.3);">Sin imágenes en este proyecto.</div>';
+
+  const footerLine = [proy.cliente, proyModalLabel].filter(Boolean).join(' · ').toUpperCase();
 
   content.innerHTML = `
     <div class="proy-body">
       <div class="proy-images">${imagesHtml}</div>
       <div class="proy-info">
-        ${proy.cliente ? '<div class="proy-info-cliente">'+proy.cliente+'</div>' : ''}
+        <div class="proy-info-cliente">${proyModalLabel.toUpperCase()}</div>
         <div class="proy-info-titulo">${proy.titulo}</div>
+        <div class="proy-info-divider"></div>
         <div class="proy-info-desc">${proy.descripcion || ''}</div>
+        <div class="proy-info-footer">
+          <div class="proy-info-de">De</div>
+          <div class="proy-info-cliente-line">${footerLine}</div>
+        </div>
       </div>
-    </div>
-    <div class="proy-nav">
-      <button class="proy-arrow" onclick="proyNav(-1)" ${proyModalItems.length<2?'style="visibility:hidden"':''}>←</button>
-      <div class="proy-counter">${proyModalIdx+1} / ${proyModalItems.length}</div>
-      <button class="proy-arrow" onclick="proyNav(1)" ${proyModalItems.length<2?'style="visibility:hidden"':''}>→</button>
     </div>
   `;
 }
