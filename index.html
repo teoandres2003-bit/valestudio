@@ -217,7 +217,7 @@
     .proy-images{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:12px;height:100%;overflow:hidden;}
     .proy-images img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;transition:opacity 0.2s;}
     .proy-images img:hover{opacity:0.82;}
-    .proy-info{display:flex;flex-direction:column;padding-top:1rem;overflow-y:auto;min-height:0;}
+    .proy-info{display:flex;flex-direction:column;padding-top:1rem;overflow-y:auto;overflow-x:hidden;min-height:0;}
     .proy-info-cliente{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:1rem;}
     .proy-info-titulo{font-family:"Cormorant Garamond",serif;font-size:46px;font-weight:400;color:var(--white);margin-bottom:1.5rem;line-height:1.15;}
     .proy-info-divider{width:48px;height:1px;background:var(--proy-accent);margin-bottom:1.75rem;}
@@ -229,7 +229,7 @@
     @media(max-width:768px){
       .proy-overlay{padding:0;}
       .proy-box{width:100%;height:100vh;max-height:100vh;}
-      .proy-body{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:1.25rem;padding:1rem 1.25rem 1.5rem;overflow-y:auto;}
+      .proy-body{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:1.25rem;padding:1rem 1.25rem 1.5rem;overflow-y:auto;overflow-x:hidden;}
       .proy-images{height:220px;}
       .proy-info{overflow-y:visible;padding-top:0;}
       .proy-info-titulo{font-size:30px;}
@@ -244,7 +244,7 @@
     .foto-cats-view{display:flex;flex-direction:column;flex:1;min-height:0;padding:0 3rem 2.5rem;overflow:hidden;}
     .foto-cats-title{font-family:"Cormorant Garamond",serif;font-size:38px;font-weight:400;color:var(--white);margin-bottom:1.75rem;flex-shrink:0;}
     .foto-cats-body{display:flex;gap:3rem;flex:1;min-height:0;}
-    .foto-cat-grid{flex:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;overflow-y:auto;align-content:start;}
+    .foto-cat-grid{flex:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));grid-auto-rows:1fr;gap:14px;overflow-y:auto;overflow-x:hidden;}
     .foto-cat-card{position:relative;overflow:hidden;background-size:cover;background-position:center;background-color:#0a0a0a;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;padding:1.5rem;cursor:pointer;transition:transform 0.3s;}
     .foto-cat-card:hover{transform:scale(1.015);}
     .foto-cat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.1) 45%,rgba(0,0,0,0.7) 100%);}
@@ -254,7 +254,7 @@
     .foto-cat-desc{font-size:12.5px;line-height:1.65;color:rgba(255,255,255,0.65);font-weight:300;max-width:230px;}
     .foto-cat-arrow{align-self:flex-start;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);background:rgba(0,0,0,0.3);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all 0.2s;}
     .foto-cat-arrow:hover{background:var(--white);color:var(--black);}
-    .foto-intro{flex:1;max-width:380px;overflow-y:auto;padding-top:0.5rem;}
+    .foto-intro{flex:1;max-width:380px;overflow-y:auto;overflow-x:hidden;padding-top:0.5rem;}
     .foto-intro-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:1rem;}
     .foto-intro-title{font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--white);line-height:1.25;margin-bottom:1.5rem;}
     .foto-intro-desc{font-size:14px;line-height:1.85;color:rgba(255,255,255,0.55);font-weight:300;margin-bottom:1.75rem;}
@@ -271,7 +271,7 @@
     @media(max-width:768px){
       .foto-cats-view,.foto-gallery-view{padding:0 1.25rem 1.5rem;}
       .foto-cats-title{font-size:28px;margin-bottom:1rem;}
-      .foto-cats-body{flex-direction:column;overflow-y:auto;}
+      .foto-cats-body{flex-direction:column;overflow-y:auto;overflow-x:hidden;}
       .foto-cat-grid{grid-template-columns:repeat(2,1fr);overflow-y:visible;}
       .foto-cat-card{min-height:180px;}
       .foto-intro{max-width:none;}
