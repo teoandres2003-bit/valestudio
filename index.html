@@ -239,6 +239,44 @@
       .proy-arrow-right{right:0.5rem;}
     }
 
+    /* FOTOGRAFÍA MODAL */
+    #foto-content{flex:1;display:flex;flex-direction:column;min-height:0;}
+    .foto-cats-view{display:flex;flex-direction:column;flex:1;min-height:0;padding:0 3rem 2.5rem;overflow:hidden;}
+    .foto-cats-title{font-family:"Cormorant Garamond",serif;font-size:38px;font-weight:400;color:var(--white);margin-bottom:1.75rem;flex-shrink:0;}
+    .foto-cats-body{display:flex;gap:3rem;flex:1;min-height:0;}
+    .foto-cat-grid{flex:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;overflow-y:auto;align-content:start;}
+    .foto-cat-card{position:relative;overflow:hidden;background-size:cover;background-position:center;background-color:#0a0a0a;min-height:280px;display:flex;flex-direction:column;justify-content:space-between;padding:1.5rem;cursor:pointer;transition:transform 0.3s;}
+    .foto-cat-card:hover{transform:scale(1.015);}
+    .foto-cat-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.1) 45%,rgba(0,0,0,0.7) 100%);}
+    .foto-cat-text, .foto-cat-arrow{position:relative;z-index:1;}
+    .foto-cat-label{font-family:"Cormorant Garamond",serif;font-size:17px;color:rgba(255,255,255,0.8);}
+    .foto-cat-name{font-family:"Cormorant Garamond",serif;font-size:27px;color:var(--proy-accent);margin-bottom:0.6rem;}
+    .foto-cat-desc{font-size:12.5px;line-height:1.65;color:rgba(255,255,255,0.65);font-weight:300;max-width:230px;}
+    .foto-cat-arrow{align-self:flex-start;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,0.5);background:rgba(0,0,0,0.3);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:15px;cursor:pointer;transition:all 0.2s;}
+    .foto-cat-arrow:hover{background:var(--white);color:var(--black);}
+    .foto-intro{flex:1;max-width:380px;overflow-y:auto;padding-top:0.5rem;}
+    .foto-intro-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:1rem;}
+    .foto-intro-title{font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--white);line-height:1.25;margin-bottom:1.5rem;}
+    .foto-intro-desc{font-size:14px;line-height:1.85;color:rgba(255,255,255,0.55);font-weight:300;margin-bottom:1.75rem;}
+    .foto-intro-feature{display:flex;gap:0.85rem;align-items:flex-start;}
+    .foto-intro-feature svg{width:22px;height:22px;flex-shrink:0;stroke:var(--proy-accent);fill:none;stroke-width:1.5;margin-top:2px;}
+    .foto-intro-feature-title{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.8);margin-bottom:0.3rem;}
+    .foto-intro-feature-desc{font-size:12.5px;line-height:1.6;color:rgba(255,255,255,0.5);}
+    .foto-gallery-view{display:flex;flex-direction:column;flex:1;min-height:0;padding:0 3rem 2.5rem;}
+    .foto-back{align-self:flex-start;background:none;border:none;color:rgba(255,255,255,0.6);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;margin-bottom:1.25rem;transition:color 0.2s;}
+    .foto-back:hover{color:var(--white);}
+    .foto-gallery-header{margin-bottom:1.5rem;flex-shrink:0;}
+    .foto-gallery-title{font-family:"Cormorant Garamond",serif;font-size:34px;color:var(--white);margin-bottom:0.5rem;}
+    .foto-gallery-desc{font-size:13px;color:rgba(255,255,255,0.5);font-weight:300;max-width:600px;}
+    @media(max-width:768px){
+      .foto-cats-view,.foto-gallery-view{padding:0 1.25rem 1.5rem;}
+      .foto-cats-title{font-size:28px;margin-bottom:1rem;}
+      .foto-cats-body{flex-direction:column;overflow-y:auto;}
+      .foto-cat-grid{grid-template-columns:repeat(2,1fr);overflow-y:visible;}
+      .foto-cat-card{min-height:180px;}
+      .foto-intro{max-width:none;}
+    }
+
     /* LIGHTBOX */
     .lightbox{display:none;position:fixed;inset:0;z-index:400;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;padding:2rem;cursor:zoom-out;}
     .lightbox.open{display:flex;}
@@ -340,7 +378,7 @@
       <svg class="service-icon" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
       <div class="service-name">Fotografía</div>
       <div class="service-desc">Fotografía de producto, espacios, eventos y retratos profesionales.</div>
-      <a href="#contacto" class="service-link">Ver más →</a>
+      <a href="#" class="service-link" onclick="return openFotoModal(event)">Ver más →</a>
     </div>
     <div class="service-item fade-up">
       <div id="svc-img-community" style="display:none;width:100%;aspect-ratio:3/2;overflow:hidden;margin-bottom:0.5rem;"><img style="width:100%;height:100%;object-fit:cover;" id="svc-img-community-img" src="" alt=""/></div>
@@ -497,6 +535,16 @@
   <button class="proy-arrow-fixed proy-arrow-right" id="proy-arrow-right" onclick="proyNav(1)">→</button>
 </div>
 
+<!-- MODAL FOTOGRAFÍA -->
+<div class="proy-overlay" id="foto-overlay">
+  <div class="proy-box">
+    <div class="proy-top">
+      <button class="proy-close" onclick="closeFotoModal()">×</button>
+    </div>
+    <div id="foto-content"></div>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
   <img id="lightbox-img" src="" alt=""/>
@@ -596,6 +644,33 @@
           <div id="proy-admin-preview" class="admin-multi-grid"></div>
           <div style="margin-top:8px;"><button class="admin-btn" onclick="addProyecto()">Agregar proyecto</button></div>
           <div class="admin-msg" id="proy-admin-msg"></div>
+        </div>
+      </div>
+
+      <!-- FOTOGRAFÍA: CATEGORÍAS -->
+      <div class="admin-section">
+        <div class="admin-section-title">Fotografía (Categorías)</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:1rem;">Cada categoría (ej: Social, Producto, Espacios) tiene una foto de portada, una descripción breve y su propia galería de fotos.</div>
+        <div id="foto-admin-list" style="margin-bottom:1rem;"></div>
+
+        <div style="background:rgba(255,255,255,0.04);border:0.5px solid rgba(255,255,255,0.08);padding:1.25rem;">
+          <div style="font-size:11px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:1rem;">Agregar categoría</div>
+          <input class="admin-input" id="foto-admin-nombre" placeholder="Nombre (ej: Social, Producto, Espacios)"/>
+          <textarea class="admin-input" id="foto-admin-desc" maxlength="300" placeholder="Descripción breve (máx. 300 caracteres)" style="height:70px;resize:none;" oninput="document.getElementById('foto-admin-count').textContent=this.value.length"></textarea>
+          <div style="font-size:10px;color:rgba(255,255,255,0.25);margin-bottom:10px;text-align:right;"><span id="foto-admin-count">0</span>/300</div>
+
+          <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:6px;">Foto de portada</div>
+          <button class="admin-upload-btn" style="margin-bottom:8px" onclick="document.getElementById('foto-admin-portada').click()">Seleccionar portada</button>
+          <input type="file" id="foto-admin-portada" accept="image/*" style="display:none" onchange="previewFotoPortada(event)"/>
+          <div id="foto-admin-portada-preview" class="admin-multi-grid"></div>
+
+          <div style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin:12px 0 6px;">Galería de fotos (máx. 20)</div>
+          <button class="admin-upload-btn" style="margin-bottom:8px" onclick="document.getElementById('foto-admin-imgs').click()">Seleccionar fotos</button>
+          <input type="file" id="foto-admin-imgs" accept="image/*" multiple style="display:none" onchange="previewFotoImgs(event)"/>
+          <div id="foto-admin-preview" class="admin-multi-grid"></div>
+
+          <div style="margin-top:8px;"><button class="admin-btn" onclick="addFotoCategoria()">Agregar categoría</button></div>
+          <div class="admin-msg" id="foto-admin-msg"></div>
         </div>
       </div>
 
@@ -754,6 +829,11 @@ async function loadSiteData(){
       }
     }
   }
+  // Mostrar la portada de la primera categoría en la tarjeta de Fotografía (si hay categorías cargadas)
+  const {data:primeraCat} = await sb.from('foto_categorias').select('imagen_portada').order('orden').limit(1);
+  if(primeraCat && primeraCat.length && primeraCat[0].imagen_portada){
+    updateSvcDisplay('fotografia', [primeraCat[0].imagen_portada]);
+  }
 }
 
 function showSvcImg(key, url){
@@ -874,6 +954,7 @@ async function loadAdminData(){
   const {data:pf} = await sb.from('portfolio').select('*').order('orden');
   renderAdminPortfolio(pf||[]);
   loadAdminProyectos();
+  loadAdminFotoCategorias();
 }
 
 function setAdminPreview(id, url){
@@ -1056,6 +1137,101 @@ function closeLightbox(){
   document.getElementById('lightbox').classList.remove('open');
 }
 
+// ── MODAL FOTOGRAFÍA (PÚBLICO) ──
+let fotoCategorias = [];
+
+async function openFotoModal(e){
+  if(e) e.preventDefault();
+  document.getElementById('foto-overlay').classList.add('open');
+  const content = document.getElementById('foto-content');
+  content.innerHTML = '<div class="proy-empty">Cargando...</div>';
+
+  const {data, error} = await sb.from('foto_categorias').select('*').order('orden');
+  fotoCategorias = data || [];
+
+  if(error || !fotoCategorias.length){
+    content.innerHTML = '<div class="proy-empty">Todavía no hay categorías de fotografía cargadas.<br>¡Volvé pronto!</div>';
+    return false;
+  }
+  renderFotoCategorias();
+  return false;
+}
+
+function closeFotoModal(){
+  document.getElementById('foto-overlay').classList.remove('open');
+}
+
+function renderFotoCategorias(){
+  const content = document.getElementById('foto-content');
+  content.innerHTML = `
+    <div class="foto-cats-view">
+      <div class="foto-cats-title">Fotografía</div>
+      <div class="foto-cats-body">
+        <div class="foto-cat-grid">
+          ${fotoCategorias.map(cat => `
+            <div class="foto-cat-card" style="background-image:url('${cat.imagen_portada||''}')" onclick="openFotoCategoria('${cat.id}')">
+              <div class="foto-cat-text">
+                <div class="foto-cat-label">Fotografía</div>
+                <div class="foto-cat-name">${cat.nombre}</div>
+                <div class="foto-cat-desc">${cat.descripcion||''}</div>
+              </div>
+              <button class="foto-cat-arrow" onclick="event.stopPropagation();openFotoCategoria('${cat.id}')">→</button>
+            </div>
+          `).join('')}
+        </div>
+        <div class="foto-intro">
+          <div class="foto-intro-label">Fotografía profesional</div>
+          <div class="foto-intro-title">Imágenes que comunican lo que las palabras no pueden.</div>
+          <div class="proy-info-divider"></div>
+          <div class="foto-intro-desc">A través de la fotografía capturo momentos, detalles y emociones que conectan con las personas y potencian tu marca o proyecto.</div>
+          <div class="foto-intro-feature">
+            <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <div>
+              <div class="foto-intro-feature-title">Enfoque profesional</div>
+              <div class="foto-intro-feature-desc">Calidad, creatividad y atención en cada detalle.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function openFotoCategoria(id){
+  const cat = fotoCategorias.find(c => String(c.id) === String(id));
+  if(!cat) return;
+  const content = document.getElementById('foto-content');
+  content.innerHTML = '<div class="proy-empty">Cargando...</div>';
+
+  const {data:imgs} = await sb.from('foto_imagenes').select('*').eq('categoria_id', cat.id).order('orden');
+  const imagenes = imgs || [];
+
+  if(imagenes.length){
+    updateSvcDisplay('fotografia', [imagenes[0].imagen_url]);
+  }
+
+  const spanStyle = imagenes.length === 1 ? ' style="grid-column:span 2;grid-row:span 2;"'
+                   : imagenes.length === 2 ? ' style="grid-row:span 2;"' : '';
+  const imagesHtml = imagenes.length
+    ? imagenes.map(im => '<img src="'+im.imagen_url+'" alt=""'+spanStyle+' onclick="openLightbox(\''+im.imagen_url+'\')"/>').join('')
+    : '<div style="grid-column:span 2;grid-row:span 2;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;color:rgba(255,255,255,0.3);">Sin fotos en esta categoría.</div>';
+
+  content.innerHTML = `
+    <div class="foto-gallery-view">
+      <button class="foto-back" onclick="backToFotoCategorias()">← Volver a categorías</button>
+      <div class="foto-gallery-header">
+        <div class="foto-gallery-title">${cat.nombre}</div>
+        <div class="foto-gallery-desc">${cat.descripcion||''}</div>
+      </div>
+      <div class="proy-images" style="flex:1;">${imagesHtml}</div>
+    </div>
+  `;
+}
+
+function backToFotoCategorias(){
+  renderFotoCategorias();
+}
+
 // ── ADMIN: PROYECTOS ──
 let proyAdminFiles = [];
 
@@ -1141,6 +1317,113 @@ async function removeProyecto(id){
   await sb.from('proyecto_imagenes').delete().eq('proyecto_id', id);
   await sb.from('proyectos').delete().eq('id', id);
   loadAdminProyectos();
+}
+
+// ── ADMIN: FOTOGRAFÍA (CATEGORÍAS) ──
+let fotoAdminPortadaFile = null;
+let fotoAdminGaleriaFiles = [];
+
+async function loadAdminFotoCategorias(){
+  const list = document.getElementById('foto-admin-list');
+  list.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.2);">Cargando...</div>';
+  const {data} = await sb.from('foto_categorias').select('*, foto_imagenes(count)').order('orden');
+  renderAdminFotoList(data || []);
+}
+
+function renderAdminFotoList(items){
+  const list = document.getElementById('foto-admin-list');
+  if(!items.length){ list.innerHTML = '<div style="font-size:12px;color:rgba(255,255,255,0.2);margin-bottom:1rem;">Sin categorías cargadas todavía.</div>'; return; }
+  list.innerHTML = items.map(item => {
+    const count = item.foto_imagenes && item.foto_imagenes[0] ? item.foto_imagenes[0].count : 0;
+    const thumb = item.imagen_portada ? '<img src="'+item.imagen_portada+'" style="width:40px;height:40px;object-fit:cover;"/>' : '<div style="width:40px;height:40px;background:rgba(255,255,255,0.05);"></div>';
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:0.5px solid rgba(255,255,255,0.06);">'
+      + thumb
+      + '<div style="flex:1;">'
+      + '<div style="font-size:13px;color:rgba(255,255,255,0.7);">'+item.nombre+'</div>'
+      + '<div style="font-size:11px;color:rgba(255,255,255,0.3);">'+count+' foto(s)</div>'
+      + '</div>'
+      + '<button class="admin-btn admin-btn-red" onclick="removeFotoCategoria(\''+item.id+'\')">Eliminar</button>'
+      + '</div>';
+  }).join('');
+}
+
+function previewFotoPortada(e){
+  fotoAdminPortadaFile = e.target.files[0] || null;
+  const prev = document.getElementById('foto-admin-portada-preview');
+  prev.innerHTML = '';
+  if(!fotoAdminPortadaFile) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const wrap = document.createElement('div');
+    wrap.className = 'admin-multi-thumb';
+    wrap.innerHTML = '<img src="'+ev.target.result+'" alt=""/>';
+    prev.appendChild(wrap);
+  };
+  reader.readAsDataURL(fotoAdminPortadaFile);
+}
+
+function previewFotoImgs(e){
+  fotoAdminGaleriaFiles = Array.from(e.target.files).slice(0, 20);
+  const prev = document.getElementById('foto-admin-preview');
+  prev.innerHTML = '';
+  fotoAdminGaleriaFiles.forEach(f => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const wrap = document.createElement('div');
+      wrap.className = 'admin-multi-thumb';
+      wrap.innerHTML = '<img src="'+ev.target.result+'" alt=""/>';
+      prev.appendChild(wrap);
+    };
+    reader.readAsDataURL(f);
+  });
+}
+
+async function addFotoCategoria(){
+  const nombre = document.getElementById('foto-admin-nombre').value.trim();
+  const descripcion = document.getElementById('foto-admin-desc').value.trim();
+  const msg = document.getElementById('foto-admin-msg');
+
+  if(!nombre){ msg.className='admin-msg err'; msg.textContent='Poné un nombre para la categoría.'; return; }
+  if(!fotoAdminPortadaFile){ msg.className='admin-msg err'; msg.textContent='Seleccioná una foto de portada.'; return; }
+
+  msg.className='admin-msg'; msg.textContent='Subiendo imágenes...';
+  try{
+    const portadaUrl = await uploadToCloudinary(fotoAdminPortadaFile);
+    const galeriaUrls = [];
+    for(const file of fotoAdminGaleriaFiles){
+      galeriaUrls.push(await uploadToCloudinary(file));
+    }
+
+    const {data:existing} = await sb.from('foto_categorias').select('orden').order('orden',{ascending:false}).limit(1);
+    const orden = existing && existing.length ? existing[0].orden + 1 : 0;
+
+    const {data:inserted, error} = await sb.from('foto_categorias').insert({nombre, descripcion, imagen_portada:portadaUrl, orden}).select().single();
+    if(error) throw error;
+
+    if(galeriaUrls.length){
+      const imgRows = galeriaUrls.map((url,i) => ({categoria_id: inserted.id, imagen_url: url, orden: i}));
+      await sb.from('foto_imagenes').insert(imgRows);
+    }
+
+    msg.className='admin-msg ok'; msg.textContent='✓ Categoría agregada';
+    document.getElementById('foto-admin-nombre').value='';
+    document.getElementById('foto-admin-desc').value='';
+    document.getElementById('foto-admin-count').textContent='0';
+    document.getElementById('foto-admin-portada-preview').innerHTML='';
+    document.getElementById('foto-admin-preview').innerHTML='';
+    fotoAdminPortadaFile = null;
+    fotoAdminGaleriaFiles = [];
+    loadAdminFotoCategorias();
+  } catch(err){
+    msg.className='admin-msg err'; msg.textContent='Error: '+err.message;
+  }
+}
+
+async function removeFotoCategoria(id){
+  if(!confirm('¿Eliminar esta categoría y todas sus fotos?')) return;
+  await sb.from('foto_imagenes').delete().eq('categoria_id', id);
+  await sb.from('foto_categorias').delete().eq('id', id);
+  loadAdminFotoCategorias();
 }
 
 // ── COPY EMAIL ──
