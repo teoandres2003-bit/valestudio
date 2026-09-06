@@ -202,32 +202,38 @@
 
     /* PROYECTOS MODAL */
     :root{--proy-accent:#C9A97E;}
-    .proy-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.8);backdrop-filter:blur(6px);padding:2rem;align-items:center;justify-content:center;}
+    .proy-overlay{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.85);backdrop-filter:blur(6px);padding:1.5rem;align-items:center;justify-content:center;}
     .proy-overlay.open{display:flex;}
     .proy-arrow-fixed{position:fixed;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;background:transparent;border:1px solid rgba(255,255,255,0.4);color:var(--white);font-size:16px;cursor:pointer;transition:all 0.2s;z-index:301;display:flex;align-items:center;justify-content:center;}
     .proy-arrow-fixed:hover{background:rgba(255,255,255,0.1);border-color:var(--white);}
     .proy-arrow-left{left:2rem;}
     .proy-arrow-right{right:2rem;}
-    .proy-box{position:relative;max-width:1200px;width:100%;background:#161616;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;}
-    .proy-top{display:flex;align-items:center;justify-content:flex-end;padding:1.25rem 1.75rem 0;flex-shrink:0;}
-    .proy-close{background:none;border:none;font-size:26px;color:rgba(255,255,255,0.7);cursor:pointer;line-height:1;transition:color 0.2s;}
+    .proy-box{position:relative;width:95vw;max-width:1700px;height:90vh;background:#161616;display:flex;flex-direction:column;overflow:hidden;}
+    .proy-top{display:flex;align-items:center;justify-content:flex-end;padding:1.5rem 2rem 0;flex-shrink:0;}
+    #proy-content{flex:1;display:flex;flex-direction:column;min-height:0;}
+    .proy-close{background:none;border:none;font-size:30px;color:rgba(255,255,255,0.7);cursor:pointer;line-height:1;transition:color 0.2s;}
     .proy-close:hover{color:var(--white);}
-    .proy-body{display:grid;grid-template-columns:1.15fr 1fr;gap:3rem;padding:1.5rem 2.5rem 2.5rem;overflow-y:auto;}
-    .proy-images{column-count:2;column-gap:10px;}
-    .proy-images img{width:100%;display:block;margin-bottom:10px;cursor:pointer;transition:opacity 0.2s;break-inside:avoid;}
+    .proy-body{flex:1;display:grid;grid-template-columns:1.2fr 1fr;gap:3.5rem;padding:1.5rem 3rem 3rem;min-height:0;}
+    .proy-images{display:grid;grid-template-columns:repeat(2,1fr);grid-auto-rows:1fr;gap:12px;height:100%;overflow:hidden;}
+    .proy-images img{width:100%;height:100%;object-fit:cover;display:block;cursor:pointer;transition:opacity 0.2s;}
     .proy-images img:hover{opacity:0.82;}
-    .proy-info{display:flex;flex-direction:column;padding-top:0.25rem;}
-    .proy-info-cliente{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:0.75rem;}
-    .proy-info-titulo{font-family:"Cormorant Garamond",serif;font-size:36px;font-weight:400;color:var(--white);margin-bottom:1.25rem;line-height:1.15;}
-    .proy-info-divider{width:40px;height:1px;background:var(--proy-accent);margin-bottom:1.5rem;}
-    .proy-info-desc{font-size:14px;line-height:1.85;color:rgba(255,255,255,0.55);font-weight:300;margin-bottom:auto;}
+    .proy-info{display:flex;flex-direction:column;padding-top:1rem;overflow-y:auto;min-height:0;}
+    .proy-info-cliente{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:1rem;}
+    .proy-info-titulo{font-family:"Cormorant Garamond",serif;font-size:46px;font-weight:400;color:var(--white);margin-bottom:1.5rem;line-height:1.15;}
+    .proy-info-divider{width:48px;height:1px;background:var(--proy-accent);margin-bottom:1.75rem;}
+    .proy-info-desc{font-size:15px;line-height:1.9;color:rgba(255,255,255,0.55);font-weight:300;margin-bottom:auto;}
     .proy-info-footer{margin-top:2rem;padding-top:1.5rem;border-top:0.5px solid rgba(255,255,255,0.1);}
-    .proy-info-de{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:0.4rem;}
-    .proy-info-cliente-line{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);}
-    .proy-empty{padding:5rem 2rem;text-align:center;font-family:"Cormorant Garamond",serif;font-size:22px;color:rgba(255,255,255,0.4);}
+    .proy-info-de{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--proy-accent);margin-bottom:0.4rem;}
+    .proy-info-cliente-line{font-size:13px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.6);}
+    .proy-empty{padding:5rem 2rem;text-align:center;font-family:"Cormorant Garamond",serif;font-size:22px;color:rgba(255,255,255,0.4);margin:auto;}
     @media(max-width:768px){
-      .proy-body{grid-template-columns:1fr;gap:1.5rem;padding:1.25rem 1.5rem 2rem;}
-      .proy-top{padding:1.25rem 1.5rem 0.25rem;}
+      .proy-overlay{padding:0;}
+      .proy-box{width:100%;height:100vh;max-height:100vh;}
+      .proy-body{grid-template-columns:1fr;grid-template-rows:auto 1fr;gap:1.25rem;padding:1rem 1.25rem 1.5rem;overflow-y:auto;}
+      .proy-images{height:220px;}
+      .proy-info{overflow-y:visible;padding-top:0;}
+      .proy-info-titulo{font-size:30px;}
+      .proy-top{padding:1rem 1.25rem 0;}
       .proy-arrow-fixed{width:38px;height:38px;font-size:14px;}
       .proy-arrow-left{left:0.5rem;}
       .proy-arrow-right{right:0.5rem;}
@@ -996,9 +1002,11 @@ async function renderProyModal(){
   const {data:imgs} = await sb.from('proyecto_imagenes').select('*').eq('proyecto_id', proy.id).order('orden');
   const imagenes = imgs || [];
 
+  const spanStyle = imagenes.length === 1 ? ' style="grid-column:span 2;grid-row:span 2;"'
+                   : imagenes.length === 2 ? ' style="grid-row:span 2;"' : '';
   const imagesHtml = imagenes.length
-    ? imagenes.map(im => '<img src="'+im.imagen_url+'" alt="" onclick="openLightbox(\''+im.imagen_url+'\')"/>').join('')
-    : '<div style="font-size:12px;color:rgba(255,255,255,0.3);">Sin imágenes en este proyecto.</div>';
+    ? imagenes.map(im => '<img src="'+im.imagen_url+'" alt=""'+spanStyle+' onclick="openLightbox(\''+im.imagen_url+'\')"/>').join('')
+    : '<div style="grid-column:span 2;grid-row:span 2;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;color:rgba(255,255,255,0.3);">Sin imágenes en este proyecto.</div>';
 
   const footerLine = [proy.cliente, proyModalLabel].filter(Boolean).join(' · ').toUpperCase();
 
