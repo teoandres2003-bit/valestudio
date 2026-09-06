@@ -743,6 +743,17 @@ async function loadSiteData(){
   // Load portfolio
   const {data:pf} = await sb.from('portfolio').select('*').order('orden');
   renderPortfolio(pf||[]);
+
+  // Mostrar la imagen del primer proyecto en cada tarjeta de servicio (si hay proyectos cargados)
+  for(const servicio of ['diseno','community','papeleria']){
+    const {data:primerProy} = await sb.from('proyectos').select('id').eq('servicio', servicio).order('orden').limit(1);
+    if(primerProy && primerProy.length){
+      const {data:primeraImg} = await sb.from('proyecto_imagenes').select('imagen_url').eq('proyecto_id', primerProy[0].id).order('orden').limit(1);
+      if(primeraImg && primeraImg.length){
+        updateSvcDisplay(servicio, [primeraImg[0].imagen_url]);
+      }
+    }
+  }
 }
 
 function showSvcImg(key, url){
@@ -1001,6 +1012,10 @@ async function renderProyModal(){
 
   const {data:imgs} = await sb.from('proyecto_imagenes').select('*').eq('proyecto_id', proy.id).order('orden');
   const imagenes = imgs || [];
+
+  if(imagenes.length){
+    updateSvcDisplay(proyModalServicio, [imagenes[0].imagen_url]);
+  }
 
   const spanStyle = imagenes.length === 1 ? ' style="grid-column:span 2;grid-row:span 2;"'
                    : imagenes.length === 2 ? ' style="grid-row:span 2;"' : '';
