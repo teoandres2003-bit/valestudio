@@ -1233,7 +1233,7 @@ loadSiteData();
 // Method 1: Key sequence - type "vsadmin" anywhere on the page
 let keySeq = '';
 document.addEventListener('keydown', e => {
-  keySeq += e.key.toLowerCase();
+  keySeq += (e.key || '').toLowerCase();
   if(keySeq.length > 7) keySeq = keySeq.slice(-7);
   if(keySeq === 'vsadmin') { keySeq = ''; openAdmin(); }
 });
