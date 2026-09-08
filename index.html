@@ -1121,7 +1121,7 @@ async function openSubcategoria(id){
 
   updateSvcDisplay(svcModalServicio, cat.imagen_portada ? [cat.imagen_portada] : []);
 
-  const {data} = await sb.from('proyectos').select('*').eq('subcategoria_id', cat.id).order('orden').limit(2);
+  const {data} = await sb.from('proyectos').select('*').eq('subcategoria_id', cat.id).order('orden').limit(10);
   svcModalTrabajos = data || [];
   svcModalTrabajoIdx = 0;
 
@@ -1234,7 +1234,7 @@ function renderAdminSubcatList(){
       + thumb
       + '<div style="flex:1;">'
       + '<div style="font-size:13px;color:rgba(255,255,255,0.7);">'+item.nombre+'</div>'
-      + '<div style="font-size:11px;color:rgba(255,255,255,0.3);">'+count+'/2 trabajos</div>'
+      + '<div style="font-size:11px;color:rgba(255,255,255,0.3);">'+count+'/10 trabajos</div>'
       + '</div>'
       + '<button class="admin-btn" onclick="toggleAdminSubcat(\''+item.id+'\')">'+(expanded?'Cerrar':'Gestionar trabajos')+'</button>'
       + '<button class="admin-btn admin-btn-red" onclick="removeSubcategoria(\''+item.id+'\')">Eliminar</button>'
@@ -1249,8 +1249,8 @@ function renderTrabajosPanel(item, count){
     ? adminSubcatTrabajos.map(t => '<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid rgba(255,255,255,0.05);"><div style="flex:1;font-size:12px;color:rgba(255,255,255,0.6);">'+t.titulo+(t.cliente?' · '+t.cliente:'')+'</div><button class="admin-btn admin-btn-red" onclick="removeTrabajo(\''+t.id+'\')">Eliminar</button></div>').join('')
     : '<div style="font-size:12px;color:rgba(255,255,255,0.2);padding:6px 0;">Sin trabajos cargados.</div>';
 
-  const formHtml = count >= 2
-    ? '<div style="font-size:12px;color:rgba(255,255,255,0.3);padding:8px 0;">Ya tenés el máximo de 2 trabajos en esta subcategoría.</div>'
+  const formHtml = count >= 10
+    ? '<div style="font-size:12px;color:rgba(255,255,255,0.3);padding:8px 0;">Ya tenés el máximo de 10 trabajos en esta subcategoría.</div>'
     : (''
       + '<div style="margin-top:10px;">'
       + '<input class="admin-input" id="trab-admin-titulo" placeholder="Título del trabajo"/>'
@@ -1363,7 +1363,7 @@ async function addTrabajo(subcatId){
 
   if(!titulo){ msg.className='admin-msg err'; msg.textContent='Poné un título para el trabajo.'; return; }
   if(!trabAdminFiles.length){ msg.className='admin-msg err'; msg.textContent='Seleccioná al menos una imagen.'; return; }
-  if(adminSubcatTrabajos.length >= 2){ msg.className='admin-msg err'; msg.textContent='Ya hay 2 trabajos en esta subcategoría.'; return; }
+  if(adminSubcatTrabajos.length >= 10){ msg.className='admin-msg err'; msg.textContent='Ya hay 10 trabajos en esta subcategoría.'; return; }
 
   msg.className='admin-msg'; msg.textContent='Subiendo imágenes...';
   try{
